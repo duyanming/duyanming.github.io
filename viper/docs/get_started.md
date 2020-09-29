@@ -1,7 +1,7 @@
 ---
 id: get_started
-title: Viper快速入门
-sidebar_label: 1.1 快速入门
+title: 1.1 框架概述
+sidebar_label: 1.1 框架概述
 slug: /
 ---
 

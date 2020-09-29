@@ -101,13 +101,13 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/duyanming/duyanming.github.com/tree/master/viper',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+            'https://github.com/duyanming/duyanming.github.com/tree/master/viper',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
