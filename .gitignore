@@ -1,0 +1,20 @@
+# Dependencies
+/viper/node_modules
+
+# Production
+/viper/build
+
+# Generated files
+/viper/.docusaurus
+/viper/.cache-loader
+
+# Misc
+/viper/.DS_Store
+/viper/.env.local
+/viper/.env.development.local
+/viper/.env.test.local
+/viper/.env.production.local
+
+/viper/npm-debug.log*
+/viper/yarn-debug.log*
+/viper/yarn-error.log*
