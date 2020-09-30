@@ -5,24 +5,27 @@ sidebar_label: 1.1 框架概述
 slug: /
 ---
 
-![效果图](https://s1.ax1x.com/2020/09/26/0iRcIU.png)
-
     Viper 是一个基于Anno开发的例子
 
-##  [Java 实现 ](https://github.com/duyanming/anno.thrift-parent) 
-
-    https://github.com/duyanming/anno.thrift-parent
-
 ##  [Viper 在线演示地址](http://140.143.207.244) 
+
  http://140.143.207.244
 
     http://140.143.207.244
     
     账号：anno
     密码：123456
+![效果图](https://s1.ax1x.com/2020/09/26/0iRcIU.png)
+
+##  [Java 实现 ](https://github.com/duyanming/anno.thrift-parent) 
+
+    https://github.com/duyanming/anno.thrift-parent
+
 # Anno 分布式开发框架
 
-    Anno 是一个分布式开发框架，同时支持 .net core3.1 、.net frameworker4.6.1
+Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc、thrift。自带服务发现、调用链追踪、Cron 调度、限流、事件总线、CQRS 、DDD、类似MVC的开发体验，插件化开发，同时支持 .net core3.1 、.net frameworker4.6.1
+
+>**Viper 是.NET平台下的Anno微服务框架的一个示例项目**
 
 ## 1、运行Viper
 
@@ -76,6 +79,11 @@ slug: /
 
 ![第一步](https://s1.ax1x.com/2020/09/26/0iRxsI.png)
 
+:::tip 知识导航
+
+详细内容参照《[2.1 注册中心](2.1viper-center.mdx)》 章节。
+
+:::
 
 ### 第二步：启动 ViperService
 
@@ -131,7 +139,7 @@ slug: /
 </configuration>
 
 ```
-
+:::note 说明
 ***一般情况下只用修改 下面两行配置***
 
 ```xml
@@ -141,6 +149,8 @@ slug: /
  <!-- 数据库连接字符串 Mysql-->
   <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
 ```
+:::
+
 
 
 

@@ -27,6 +27,11 @@ module.exports = {
           position: 'left'
         },
         {
+          href: 'http://140.143.207.244/',
+          label: '在线体验',
+          position: 'right'
+        },
+        {
           label: "仓库",
           position: "right",
           items: [
