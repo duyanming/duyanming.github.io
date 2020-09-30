@@ -8,7 +8,7 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>快速入门</>,
+    title: <>入门简单</>,
     imageUrl: 'img/undraw_docusaurus_mountain.svg',
     description: (
       <>

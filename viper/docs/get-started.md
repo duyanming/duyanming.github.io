@@ -1,5 +1,5 @@
 ---
-id: get_started
+id: get-started
 title: 1.1 框架概述
 sidebar_label: 1.1 框架概述
 slug: /
@@ -14,6 +14,8 @@ slug: /
     https://github.com/duyanming/anno.thrift-parent
 
 ##  [Viper 在线演示地址](http://140.143.207.244) 
+ http://140.143.207.244
+
     http://140.143.207.244
     
     账号：anno
@@ -24,16 +26,19 @@ slug: /
 
 ## 1、运行Viper
 
+:::caution 特别注意
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Viper运行顺序为：ViperCenter=>ViperService=>ViperApiGateWay
+:::
+
 ### MySQL 数据库
 
-```xml
+
 运行数据库脚本创建数据库
 
-	1、Viper\database\Viper20200926184831.sql
+- 1、Viper\database\Viper20200926184831.sql
 
-	2、修改viperService 数据库连接字符串
-		Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config
-```
+- 2、修改viperService 数据库连接字符串
+  >配置文件：`Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config`
 
 ``` xml
 <appSettings>
@@ -43,10 +48,11 @@ slug: /
 ```
 
 
-```
-第一步：启动注册中心
-	Viper\ViperCenter\bin\Debug\netcoreapp3.1\Anno.config
-```
+
+### 第一步：启动注册中心
+
+>配置文件：`Viper\ViperCenter\bin\Debug\netcoreapp3.1\Anno.config`
+
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -64,15 +70,17 @@ slug: /
 
 
 
-    进入项目文件夹 Viper\ViperCenter\bin\Debug\netcoreapp3.1 
-    运行命令 dotnet ViperCenter.dll
-    看到下图 说明运行成功
+-    进入项目文件夹 `Viper\ViperCenter\bin\Debug\netcoreapp3.1`
+-    运行命令 `dotnet ViperCenter.dll`
+-    看到下图 说明运行成功
+
 ![第一步](https://s1.ax1x.com/2020/09/26/0iRxsI.png)
 
-```
-第二步：启动 ViperService
-	Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config
-```
+
+### 第二步：启动 ViperService
+
+>配置文件：`Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config`
+
 
 ``` xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -124,60 +132,62 @@ slug: /
 
 ```
 
-一般情况下只用修改
+***一般情况下只用修改 下面两行配置***
 
 ```xml
  <!--注册到的目标-->
   <Ts Ip="127.0.0.1" Port="7010"/>
 
  <!-- 数据库连接字符串 Mysql-->
-    <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
+  <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
 ```
 
 
 
-    ViperService 可以和 ViperCenter 不在同一台电脑，也可以运行多个server 也可以负载均衡，高级用法随后介绍
-    进入项目文件夹 Viper\ViperService\bin\Debug\netcoreapp3.1 
-    运行命令 dotnet ViperService.dll
-    看到下图 说明 ViperService 成功运行 并且已经注册到 注册中心（ViperCenter）运行成功
+ `ViperService` 和 `ViperCenter` 可以不在同一台电脑，`ViperService`也可以采用不同端口运行多个`Service` 。`ViperCenter` 可以根据客户端请求自动负载均衡。高级用法随后介绍。
+
+- 进入项目文件夹 `Viper\ViperService\bin\Debug\netcoreapp3.1` 
+- 运行命令 `dotnet ViperService.dll`
+- 看到下图 说明 `ViperService` 成功运行 并且已经注册到 注册中心（ViperCenter）运行成功
+
 ![第二步](https://s1.ax1x.com/2020/09/26/0iWuwV.png)
 
 启动 Viper.GetWay
 
-    第三步：调用链追踪
-    	Viper\Viper\appsettings.json
+###    第三步：调用链追踪
+
+ >   配置文件：`Viper\Viper\appsettings.json`
 
 ```json
-
 {
   "Target": {
-    "AppName": "ApiGateway",
-    "IpAddress": "127.0.0.1",
-    "Port": 7010,
-    "TraceOnOff": true
+    "AppName": "ApiGateway",    //网关名称
+    "IpAddress": "127.0.0.1",   //注册中心地址
+    "Port": 7010,               //注册中心监听端口
+    "TraceOnOff": true          //true 开启链路追踪，false 关闭
   },
-  "Limit": {
-    "Enable": true,
-    "TagLimits": [
+  "Limit": {                    //网关限流 （每个服务也可以设定自己的限流策略）
+    "Enable": true,             //启用限流
+    "TagLimits": [              // 根据Tag标签限流 【channel】【router】
       {
-        "channel": "*",
-        "router": "*",
-        "timeSpan": "1",
+        "channel": "*",         //匹配所有
+        "router": "*",          //匹配所有
+        "timeSpan": "1",        //时间片单位秒
         "rps": 100,
-        "limitSize": 100
+        "limitSize": 100        //桶默认大小
       }
     ],
-    "IpLimit": {
+    "IpLimit": {                // 根据客户端IP限流
       "timeSpan": 1,
       "rps": 100,
       "limitSize": 100
     },
-    "White": [
+    "White": [                  //白名单
       "0.0.0.1",
       "192.168.1.2",
       "192.168.2.18"
     ],
-    "Black": [
+    "Black": [                  //黑名单
       "0.0.0.2",
       "192.168.3.18"
     ]
@@ -187,40 +197,59 @@ slug: /
 ```
 
 
+链路追踪列表:
 
-![第三步](https://s1.ax1x.com/2020/07/30/anlo26.png)
+>![第三步](https://s1.ax1x.com/2020/07/30/anlo26.png)
 
+
+调用链详情:
+
+>![第三步](https://s1.ax1x.com/2020/07/30/anlI8x.png)
+
+ ### 第四步：集群路由信息
+
+集群路由列表：
+>![第三步](https://s1.ax1x.com/2020/07/30/anGPsK.png)
+
+集群路由详情：
+>![第三步](https://s1.ax1x.com/2020/07/30/anGNzq.png)
+
+
+调试一个邮件接口
+
+
+>![第三步](https://s1.ax1x.com/2020/07/30/anJipn.png)
+
+看到下面消息说明调用成功
+
+```json
+{
+    "msg":null,
+    "status":true,
+    "output":{},
+    "outputData":null
+}
 ```
-调用链详情
-```
-
-![第三步](https://s1.ax1x.com/2020/07/30/anlI8x.png)
-
- 第四步：集群路由信息
-
-![第三步](https://s1.ax1x.com/2020/07/30/anGPsK.png)
-
-   ![第三步](https://s1.ax1x.com/2020/07/30/anGNzq.png)
-
-```
-调试邮件接口成功
-```
-
-![第三步](https://s1.ax1x.com/2020/07/30/anJipn.png)
 
 
+### 第五步：服务性能监控
 
-第五步：服务性能监控
-       
+监控`DashBoard`
+
+点击**最近7日追踪**柱状图可切换对每个服务`Provider`或者`网关`进行监控
 ![第四步](https://s1.ax1x.com/2020/09/26/0iRcIU.png)
 
 
 
-# Anno EventBus
-    Eventbus Support  InMemory and Rabbitmq
-## 1、Server配置
+## 2、Anno EventBus
 
-```c#
+
+Eventbus Support  `InMemory` and `Rabbitmq`
+
+
+### 2.1 Server配置
+
+```java
 	//指定EventHandler的 所在程序集
 	var funcs = Anno.Const.Assemblys.Dic.Values.ToList();
                 #region RabbitMQEventBus
@@ -250,9 +279,9 @@ slug: /
 
 ```
 
-## 2、EventData配置
+### 2.2 EventData配置
 
-```c# 
+```java
 	using Anno.EventBus;
 	
 	namespace Events
@@ -265,9 +294,9 @@ slug: /
 ```
 
 
-## 3、EventHandler配置
+### 2.3 EventHandler配置
 
-```c#
+```java
 	
 	namespace Anno.Plugs.SamsundotService.EventHandler
 	{
@@ -285,7 +314,7 @@ slug: /
 
 ```
 
- ```c#
+```java
 	
 	namespace Anno.Plugs.YYTestService.EventHandler
 	{
@@ -312,19 +341,17 @@ slug: /
 	    }
 	}
 
- ```
+```
 
-## 4、中间件
-### 4.1 缓存中间件
+### 2.4  缓存中间件
+
 #### Install-Package Anno.EngineData.Cache
 
 ```shell
-
 Install-Package Anno.EngineData.Cache
-
 ```
 
- ```c#
+```java
 	
 using System;
 using System.Collections.Generic;
@@ -351,18 +378,16 @@ namespace Anno.Plugs.CacheRateLimitService
     }
 }
 
- ```
+```
 
- ### 4.2 限流中间件
+### 2.5 限流中间件
 #### Install-Package Anno.EngineData.RateLimit
 
 ```shell
-
 Install-Package Anno.EngineData.RateLimit
-
 ```
 
- ```c#	
+ ```java	
 using System;
 using System.Collections.Generic;
 using System.Text;

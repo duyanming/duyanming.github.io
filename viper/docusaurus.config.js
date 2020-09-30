@@ -1,6 +1,6 @@
 module.exports = {
-  title: 'Viper',
-  tagline: 'Viper 是基于.NET平台下的Anno微服务框架的一个示例项目',
+  title: 'Viper & Anno',
+  tagline: 'Viper 是.NET平台下的Anno微服务框架的一个示例项目',
   url: 'https://github.com/duyanming/Viper',
   baseUrl: '/',
   onBrokenLinks: 'throw',
