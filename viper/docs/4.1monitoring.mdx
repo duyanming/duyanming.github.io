@@ -1,8 +1,71 @@
 ---
 id: 4_1_introduce
-title: 4.1 调用链监控
-sidebar_label: 4.1 调用链监控
+title: 4.1 网关&监控
+sidebar_label: 4.1 网关&监控
 ---
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## 4.1.2 源码结构
+
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/getway.jpg")} />
+</div>
+
+## 4.1.1 配置文件
+
+>   配置文件：`Viper\Viper\appsettings.json`
+
+```json
+{
+  "Target": {
+    "AppName": "ApiGateway",    //网关名称
+    "IpAddress": "127.0.0.1",   //注册中心地址
+    "Port": 7010,               //注册中心监听端口
+    "TraceOnOff": true          //true 开启链路追踪，false 关闭
+  },
+  "Limit": {                    //网关限流 （每个服务也可以设定自己的限流策略）
+    "Enable": true,             //启用限流
+    "TagLimits": [              // 根据Tag标签限流 【channel】【router】
+      {
+        "channel": "*",         //匹配所有
+        "router": "*",          //匹配所有
+        "timeSpan": "1",        //时间片单位秒
+        "rps": 100,
+        "limitSize": 100        //桶默认大小
+      }
+    ],
+    "IpLimit": {                // 根据客户端IP限流
+      "timeSpan": 1,
+      "rps": 100,
+      "limitSize": 100
+    },
+    "White": [                  //白名单
+      "0.0.0.1",
+      "192.168.1.2",
+      "192.168.2.18"
+    ],
+    "Black": [                  //黑名单
+      "0.0.0.2",
+      "192.168.3.18"
+    ]
+  }
+}
+
+```
+## 4.1.3 运行图
+
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/getway_runing.jpg")} />
+</div>
+
+## 4.1.4 浏览器打开监控网关
+
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/login_page.jpg")} />
+    <img src={useBaseUrl("img/home_page.jpg")} />
+</div>
 
 
-4.1 调用链监控
+:::tip 到此为止 `Viper` 已经完全运行起来了
+&nbsp;&nbsp;开始你的体验之旅，更多详细精彩内容随后更新
+:::

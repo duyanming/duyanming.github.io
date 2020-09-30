@@ -3,6 +3,223 @@ id: 3_1_introduce
 title: 3.1 服务提供者ViperService概述
 sidebar_label: 3.1 Provider概述
 ---
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## 3.1.1 源码结构
+
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/service01.jpg")} />
+</div>
+
+### MySQL 数据库
 
 
-3.1 服务提供者ViperService概述
+运行数据库脚本创建数据库
+
+```sql
+1、Viper\database\Viper20200926184831.sql
+```
+
+## 3.1.2 新建`.netcore3.1`控制台程序
+### 1. 取名 `ViperService`
+### 2. 添加Nuget包
+>```shell
+ dotnet add package Anno.Rpc.Server --version 1.0.2.2
+ dotnet add package Anno.EngineData --version 1.0.2.4
+ ```
+
+:::tip 开发者可以根据喜好选择底层`RPC`通讯中间件
+
+&nbsp;&nbsp;目前支持两种`Thrift`、`Grpc`,推荐`Thrift`
+
+&nbsp;&nbsp;` dotnet add package Anno.Rpc.Server --version 1.0.2.2` 为Thrift方式
+
+&nbsp;&nbsp;`dotnet add package Anno.Rpc.ClientGrpc --version 1.0.1.5` 为Grpc方式
+:::
+
+### 3. 配置文件
+>`Viper\ViperCenter\bin\Debug\netcoreapp3.1\Anno.config`
+>```xml
+    <?xml version="1.0" encoding="utf-8" ?>
+    <configuration>
+    <!--0,0 第一位是 工作站，第二位数据中心
+    （所有的 AnnoService 的 两位数不能重复例如不能存在【1,2】【1,2】）
+    可以存在【1,2】【2,1】
+    -->
+    <IdWorker>0,0</IdWorker>
+    <!--App名称-->
+    <AppName>ViperService-01</AppName>
+    <!--监听端口-->
+    <Port>7011</Port>
+    <!--权重-->
+    <Weight>1</Weight>
+    <!--功能 非Anno.Plugs  加入方式-->
+    <FuncName></FuncName>
+    <!--忽略的功能 Trace,Logic-->
+    <IgnoreFuncName></IgnoreFuncName>
+    <!--超时时间毫秒-->
+    <TimeOut>20000</TimeOut>
+    <!--注册到的目标-->
+    <Ts Ip="127.0.0.1" Port="7010"/>
+    <IocDll>
+        <!-- IOC 仓储--><!--
+        <Assembly>Anno.Repository</Assembly>
+        --><!-- 领域--><!--
+        <Assembly>Anno.Domain</Assembly>
+        --><!-- 查询服务--><!--
+        <Assembly>Anno.QueryServices</Assembly>
+        --><!--事件Handler--><!--
+        <Assembly>Anno.Command.Handler</Assembly>-->
+    </IocDll>
+    <appSettings>
+        <!-- 数据库连接字符串 Mysql-->
+        <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
+        <!--
+        redisConn Redis 连接字符串 127.0.0.1:6379,abortConnect=false,allowAdmin =true,keepAlive=180
+        redisPrefix Key 前缀 Anno:
+        redisExpiryDate Key 有效期  单位（分钟） 20
+        redisSwitch 是否开启数据库 false 不开启 false
+        -->
+        <add key="redisConn" value=""/>
+        <add key="redisPrefix" value="SW:"/>
+        <add key="redisExpiryDate" value="20"/>
+        <add key="redisSwitch" value="false"/>
+    </appSettings>
+    </configuration>
+ ```
+
+:::tip 提示
+***一般情况下只用修改 下面两行配置***
+```xml
+ <!--注册到的目标-->
+  <Ts Ip="127.0.0.1" Port="7010"/>
+
+ <!-- 数据库连接字符串 Mysql-->
+  <add key="ConnStr" value="server=xxxx;"/>
+```
+:::
+
+### 4. 程序文件
+
+正常情况下只需要一下几行代码就可以到顶服务宿主程序
+
+```java
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using Anno.Const.Attribute;
+using Anno.Loader;
+using Anno.Log;
+using Autofac;
+
+namespace ViperService
+{
+    using Anno.EngineData;
+    using Anno.Rpc.Server;
+    using System.Collections.Generic;
+    using Anno.Rpc.Storage;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            if (args.Contains("-help"))
+            {
+                Log.ConsoleWriteLine(@"
+启动参数：
+	-p 6659		设置启动端口
+	-xt 200		设置服务最大线程数
+	-t 20000		设置超时时间（单位毫秒）
+	-w 1		设置权重
+	-h 192.168.0.2	设置服务在注册中心的地址
+	-tr false		设置调用链追踪是否启用");
+                return;
+            }
+            Bootstrap.StartUp(args, () =>
+            {
+                //Anno.Const.SettingService.TraceOnOff = true;
+                var autofac = IocLoader.GetAutoFacContainerBuilder();
+                autofac.RegisterType(typeof(RpcConnectorImpl)).As(typeof(IRpcConnector)).SingleInstance();
+            });
+        }
+    }
+}
+
+```
+:::tip 服务宿主程序可以根据需要开发者自己选择依赖注入中间件
+
+&nbsp;&nbsp;目前支持两种`Autofac`、`DependencyInjection`,推荐`Autofac`
+
+&nbsp;&nbsp;`IocLoader.GetAutoFacContainerBuilder()` 为Autofac方式
+
+&nbsp;&nbsp;`IocLoader.GetServiceDescriptors()` 为DependencyInjection方式 <sub>**.netcore 自带的依赖注入中间件**</sub>
+:::
+### 5. 接口文档写入 注册中心`ViperCenter`
+
+```java {6-60} title="这段代码直接黏贴就可以不用修改"
+ Bootstrap.StartUp(args, () =>
+            {
+                //Anno.Const.SettingService.TraceOnOff = true;
+                var autofac = IocLoader.GetAutoFacContainerBuilder();
+                autofac.RegisterType(typeof(RpcConnectorImpl)).As(typeof(IRpcConnector)).SingleInstance();
+            }, () =>
+            { //startUp  CallBack
+                List<AnnoData> routings = new List<AnnoData>();
+                foreach (var item in Anno.EngineData.Routing.Routing.Router)
+                {
+                    if (item.Value.RoutMethod.Name == "get_ActionResult")
+                    {
+                        continue;
+                    }
+                    var parameters = item.Value.RoutMethod.GetParameters().ToList().Select(it =>
+                    {
+                        var parameter = new ParametersValue
+                        { Name = it.Name, Position = it.Position, ParameterType = it.ParameterType.FullName };
+                        var pa = it.GetCustomAttributes<AnnoInfoAttribute>().ToList();
+                        if (pa.Any())
+                        {
+                            parameter.Desc = pa.First().Desc;
+                        }
+                        return parameter;
+                    }).ToList();
+                    string methodDesc = String.Empty;
+                    var mAnnoInfoAttributes = item.Value.RoutMethod.GetCustomAttributes<AnnoInfoAttribute>().ToList();
+                    if (mAnnoInfoAttributes.Count > 0)
+                    {
+                        methodDesc = mAnnoInfoAttributes.First().Desc;
+                    }
+                    routings.Add(new AnnoData()
+                    {
+                        App = Anno.Const.SettingService.AppName,
+                        Id = $"{Anno.Const.SettingService.AppName}:{item.Key}",
+                        Value = Newtonsoft.Json.JsonConvert.SerializeObject(new DataValue { Desc = methodDesc, Name = item.Value.RoutMethod.Name, Parameters = parameters })
+                    });
+                }
+                Dictionary<string, string> input = new Dictionary<string, string>();
+                input.Add(CONST.Opt, CONST.DeleteByApp);
+                input.Add(CONST.App, Anno.Const.SettingService.AppName);
+                var del = Newtonsoft.Json.JsonConvert.DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
+                if (del.Status == false)
+                {
+                    Anno.Log.Log.Error(del);
+                }
+                input.Clear();
+                input.Add(CONST.Opt, CONST.UpsertBatch);
+                input.Add(CONST.Data, Newtonsoft.Json.JsonConvert.SerializeObject(routings));
+                var rlt = Newtonsoft.Json.JsonConvert.DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
+                if (rlt.Status == false)
+                {
+                    Anno.Log.Log.Error(rlt);
+                }
+            });
+```
+### 6 运行服务宿主程序
+
+<img src={useBaseUrl("img/viper_service_start.jpg")} />
+
+:::tip 说明
+- &nbsp;&nbsp; 1.看到上图画面说明已经运行成功，开始往注册中心注册
+
+- &nbsp;&nbsp; 2.因为我没有启动注册中心，所以为出现注册失败的提示。
+- &nbsp;&nbsp; 3.注册失败会`每隔一秒`重试一次，重试`60`(<sub>默认`60`可以自行修改</sub>)仍失败则不再注册。
+:::

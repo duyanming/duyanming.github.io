@@ -16,7 +16,7 @@ module.exports = {
       },
       items: [
         {
-          to: 'docs/',
+          to: 'docs',
           activeBasePath: 'docs',
           label: '文档',
           position: 'left'
@@ -60,11 +60,11 @@ module.exports = {
           items: [
             {
               label: '入门',
-              to: 'docs/',
+              to: 'docs',
             },
             {
               label: '指南',
-              to: 'docs/doc2/',
+              to: 'docs',
             },
           ],
         },

@@ -3,7 +3,7 @@ module.exports = {
     {
       type: "category",
       label: "1. 框架介绍",
-      items: ['get-started'],
+      items: ['get-started','get-started1.2'],
     },
     {
       type: "category",
@@ -17,7 +17,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "4. 调用链监控",
+      label: "4. 网关&监控",
       items: ['4_1_introduce'],
     }
     ,
