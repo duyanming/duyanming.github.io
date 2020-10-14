@@ -1,8 +1,69 @@
 ---
 id: 12_1_introduce
-title: 12.1 更多知识
-sidebar_label: 12.1 更多
+title: 12.1 Linux常用命令
+sidebar_label: 12.1 Linux常用命令
 ---
 
 
-12.1 更多知识
+### 1、发布dotnet程序
+``` shell
+dotnet publish "E:\xxx\ViperCenter.csproj" -c Release -r linux-x64 -o "E:\xxx\ViperCenter\bin"
+
+```
+
+### 2、jexus服务器
+重启服务器：
+``` shell
+/usr/jexus/jws restart
+```
+### 3、连接mysql
+``` shell
+mysql -h 192.168.0.201 -P 3306 -u root -p123
+
+### 4、查看端口占用
+``` shell
+netstat -ntlp
+
+netstat -tunlp|grep 6660
+
+
+yum install lsof
+lsof -i:6660
+```
+
+### 5、查看后台进程
+``` shell
+ps -aux|grep ViperCenter
+```
+### 6、将目录dir1复制成目录dir2
+``` shell
+cp -R file1 file2
+```
+### 7、开放端口
+配置规则： 
+``` shell
+iptables -I INPUT -p tcp --dport 8080 -j ACCEPT
+```
+保存规则：
+``` shell
+ /usr/sbin/iptables-save
+```
+### 8、关闭端口
+``` shell
+/sbin/iptables -I INPUT -p tcp --dport 80 -j DROP   写入修改
+/etc/init.d/iptables save   保存修改
+service iptables restart    重启防火墙，修改生效
+```
+### 9、打包
+``` shell
+tar zcvf pmspace20170413.tar.gz pmspace
+```
+### 10、解压
+``` shell
+tar -zxvf pmspace20170413.tar.gz
+```
+
+### 11、查看进程的运行信息例如进程【3723】
+``` shell
+cd /proc/3723
+``` 

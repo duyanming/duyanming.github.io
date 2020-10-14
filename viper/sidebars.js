@@ -58,8 +58,14 @@ module.exports = {
       items: ['11_1_introduce'],
     },
     {
+      type: "category",
+      label: "12. 更多",
+      items: ['12_1_introduce','12_2_introduce']
+    }
+    ,
+    {
       type: "doc",
-      id: "12_1_introduce",
+      id: "13_1_introduce"
     }
   ]
 };
