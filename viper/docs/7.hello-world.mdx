@@ -3,6 +3,75 @@ id: 7_1_introduce
 title: 7.1 Hello World
 sidebar_label: 7.1 Hello World
 ---
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
+　　　　Anno微服务引擎使用非常简单，Anno只专于与服务治理，对业务代码深度解耦。下面我们来写一个Hello World 服务，以此作为引子
+让我们了解Anno服务的创建有多简单。
 
-7.1 Hello World
+### 7.1 新建一个.Net Core 的控制台程序
+　　　让我们新建一个.Net Core 的控制台程序作为服务插件的宿主程序，当然你也可以新建一个Window服务程序、Winform程序作为插件宿主程序。
+这里以.Net Core控制台程序为例。 
+
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/helloworld01.png")} />
+</div>
+
+### 7.2 添加Anno依赖
+
+　　　添加依赖需要两个，一个是 `Anno.EngineData` ，一个是`Anno.Rpc.Server`。`Anno.Rpc.Server`Anno服务的核心程序包，
+`Anno.EngineData` 是一个可选程序包，在这里主要是因为业务插件（例如 `Anno.Plugs.ViperService`）是一个和通讯解耦的模块，
+为了方便服务之间也可以调用 `Anno.EngineData` 里面声明了服务之间调用的接口约束。Thrift、Grpc 插件里面做实现，
+以此来解耦通讯组件和业务插件。
+
+#### 添加Anno Nuget依赖
+```shell
+Install-Package Anno.EngineData -Version 1.0.2.6
+Install-Package Anno.Rpc.Server -Version 1.0.2.6
+```
+
+#### 增加一个Anno配置文件
+　　　Anno配置文件的名称为`Anno.config`,我们直接复制一个过来修改就可以了。主要还是修改下服务的`端口`、`名称`。
+修改完城后我们就可以启动服务了。
+
+``` xml
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <!--0,0 第一位是 工作站，第二位数据中心
+  （所有的 AnnoService 的 两位数不能重复例如不能存在【1,2】【1,2】）
+  可以存在【1,2】【2,1】
+  -->
+  <IdWorker>0,1</IdWorker>
+  <!--App名称-->
+  <AppName>HelloWorld</AppName>
+  <!--监听端口-->
+  <Port>7012</Port>
+  <!--权重-->
+  <Weight>1</Weight>
+  <!--功能 非Anno.Plugs  加入方式-->
+  <FuncName></FuncName>
+  <!--忽略的功能 Trace,Logic-->
+  <IgnoreFuncName></IgnoreFuncName>
+  <!--超时时间毫秒-->
+  <TimeOut>20000</TimeOut>
+  <!--注册到的目标-->
+  <Ts Ip="127.0.0.1" Port="7010"/>
+  <IocDll>
+    <!-- IOC 仓储-->
+    <Assembly>Anno.Repository</Assembly>
+  </IocDll>
+  <appSettings>
+   <!-- 没有用到Redis可以留空默认-->
+    <add key="redisConn" value=""/>
+    <add key="redisPrefix" value="HW:"/>
+    <add key="redisExpiryDate" value="20"/>
+    <add key="redisSwitch" value="false"/>
+  </appSettings>
+</configuration>
+
+```
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/helloworld02.png")} />
+</div>
+
+　　　到此为止一个HelloWorld服务已经编写完成且成功启动。每个一秒会向注册中心注册。另外我们没有看到提示`服务功能Tag`，这是因为我们还没有编写功能插件。
+下一小节我们来一切编写一个功能插件。
