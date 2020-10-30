@@ -1,0 +1,163 @@
+---
+id: 7_2_introduce
+title: 7.2 编写一个插件
+sidebar_label: 7.2 编写一个插件
+---
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+　　　　前面章节我们已经创建好了一个HelloWorldService 服务，这一小节我们来编写一个HelloWorld插件。启动注册中心`ViperCenter`
+修改`HelloWorldService` 注册中心地址。
+
+### 7.2 新建一个HelloWorld插件
+　　　新建一个HelloWorld功能插件， 稍后我们以同样的方式添加一个SoEasy功能插件。最后我们让两个插件相互调用并输出结果。
+
+<div style={{width:"100%",textAlign:"center"}}>
+    <img src={useBaseUrl("img/helloworldPlug01.jpg")} />
+</div>
+<br/>
+添加Anno功能插件依赖
+
+```shell
+Install-Package Anno.EngineData -Version 1.0.2.6
+```
+增加一个插件启动初始化配置类`HelloWorldBootStrap`
+
+```java
+using Anno.EngineData;
+using System;
+
+namespace Anno.Plugs.HelloWorldService
+{
+    public class HelloWorldBootStrap : IPlugsConfigurationBootstrap
+    {
+        public void ConfigurationBootstrap()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void PreConfigurationBootstrap()
+        {
+            //throw new NotImplementedException();
+        }
+    }
+}
+```
+
+增加一个业务模块 `HelloWorldViperModule`
+
+```java
+/****************************************************** 
+Writer:Du YanMing
+Mail:dym880@163.com
+Create Date:2020/10/30 13:15:24 
+Functional description： HelloWorldViperModule
+******************************************************/
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Anno.Plugs.HelloWorldService
+{
+    using Anno.Const.Attribute;
+    using Anno.EngineData;
+    using HelloWorldDto;
+
+    public class HelloWorldViperModule: BaseModule
+    {
+        [AnnoInfo(Desc = "世界你好啊SayHi")]
+        public dynamic SayHello([AnnoInfo(Desc = "称呼")] string name, [AnnoInfo(Desc = "年龄")] int age) {
+            Dictionary<string, string> input = new Dictionary<string, string>();
+            input.Add("vName",name);
+            input.Add("vAge", age.ToString());
+            var soEasyMsg = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<string>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input)).OutputData;
+            return new { HelloWorldViperMsg = $"{name}你好啊，今年{age}岁了", SoEasyMsg= soEasyMsg };
+        }
+
+        [AnnoInfo(Desc = "两个整数相减等于几？我来帮你算（x-y=?）")]
+        public int Subtraction([AnnoInfo(Desc = "整数X")] int x, [AnnoInfo(Desc = "整数Y")] int y)
+        {
+            return x - y;
+        }
+        [AnnoInfo(Desc = "买个商品吧，双十一马上就来了")]
+        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName, [AnnoInfo(Desc = "商品数量")] int number)
+        {
+            double price = new Random().Next(2, 90);
+            Dictionary<string, string> input = new Dictionary<string, string>();
+            input.Add("productName", productName);
+            input.Add("number", number.ToString());
+            var product = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<ProductDto>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "BuyProduct", input)).OutputData;
+            product.CountryOfOrigin = $"中国北京中转--{ product.CountryOfOrigin}";
+            return product;
+        }
+    }
+}
+
+```
+
+增加一个业务模块 `Anno.Plugs.SoEasyService` `AnnoSoEasyModule`
+
+```java
+/****************************************************** 
+Writer:Du YanMing
+Mail:dym880@163.com
+Create Date:2020/10/30 13:16:23 
+Functional description： AnnoSoEasyModule
+******************************************************/
+using Anno.EngineData;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Anno.Plugs.SoEasyService
+{
+    using Anno.Const.Attribute;
+    using Anno.EngineData;
+    using HelloWorldDto;
+
+    public class AnnoSoEasyModule : BaseModule
+    {
+        [AnnoInfo(Desc = "AnnoSoEasy你好啊SayHi")]
+        public dynamic SayHi([AnnoInfo(Desc = "称呼")] string vname, [AnnoInfo(Desc = "年龄")] int vage)
+        {
+            var msg = string.Empty;
+            if (vage < 12)
+            {
+                msg = "小朋友年纪轻轻就就开始玩变成了啊！加油Baby！";
+            }else if (vage < 23)
+            {
+                msg = "小兄弟，找女朋友了吗？没有的话赶紧找一个吧。别把心思都放在写代码上！";
+            }
+            else if (vage < 30)
+            {
+                msg = "兄弟，你家小孩几岁了？开始学编程了吗？";
+            }
+            else if (vage < 45)
+            {
+                msg = "大哥，你好能给我介绍个对象吗？";
+            }
+            else if (vage < 55)
+            {
+                msg = "大叔，你家邻居有小妹妹介绍吗？";
+            }
+            else
+            {
+                msg = "还不退休？别写代码了！";
+            }
+            return $"{vname}:你好，我是SoEasy，{msg}";
+        }
+
+        [AnnoInfo(Desc = "两个整数相加等于几？我来帮你算")]
+        public int Add([AnnoInfo(Desc = "整数X")] int x, [AnnoInfo(Desc = "整数Y")] int y)
+        {
+            return x + y;
+        }
+        [AnnoInfo(Desc = "买个商品吧，双十一马上就来了")]
+        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName, [AnnoInfo(Desc = "商品数量")] int number)
+        {
+            double price = new Random().Next(2, 90);
+            return new ProductDto() { Name=productName,Price=price ,Number=number, CountryOfOrigin="中国台湾"};
+        }
+    }
+}
+
+```

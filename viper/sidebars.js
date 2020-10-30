@@ -35,7 +35,7 @@ module.exports = {
     {
       type: "category",
       label: "7. Hello World",
-      items: ['7_1_introduce'],
+      items: ['7_1_introduce','7_2_introduce','7_3_introduce'],
     },
     {
       type: "category",
