@@ -60,7 +60,7 @@ module.exports = {
     {
       type: "category",
       label: "12. 更多",
-      items: ['12_1_introduce','12_2_introduce']
+      items: ['12_1_introduce','12_2_introduce','12_3_nginx']
     }
     ,
     {

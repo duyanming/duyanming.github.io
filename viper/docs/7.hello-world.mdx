@@ -18,7 +18,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 ### 7.2 添加Anno依赖
 
-　　　添加依赖需要两个，一个是 `Anno.EngineData` ，一个是`Anno.Rpc.Server`。`Anno.Rpc.Server`Anno服务的核心程序包，
+　　　添加依赖需要两个，一个是 `Anno.EngineData` ，一个是`Anno.Rpc.Server`。`Anno.Rpc.Server`是Anno服务的核心程序包，
 `Anno.EngineData` 是一个可选程序包，在这里主要是因为业务插件（例如 `Anno.Plugs.ViperService`）是一个和通讯解耦的模块，
 为了方便服务之间也可以调用 `Anno.EngineData` 里面声明了服务之间调用的接口约束。Thrift、Grpc 插件里面做实现，
 以此来解耦通讯组件和业务插件。
@@ -74,4 +74,4 @@ Install-Package Anno.Rpc.Server -Version 1.0.2.6
 </div>
 
 　　　到此为止一个HelloWorld服务已经编写完成且成功启动。每个一秒会向注册中心注册。另外我们没有看到提示`服务功能Tag`，这是因为我们还没有编写功能插件。
-下一小节我们来一切编写一个功能插件。
+下一小节我们来编写一个功能插件。
