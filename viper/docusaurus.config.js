@@ -1,15 +1,15 @@
 module.exports = {
-  title: 'Viper & Anno',
-  tagline: 'Viper 是.NET平台下的Anno微服务框架的一个示例项目',
-  url: 'https://github.com/duyanming/Viper',
+  title: 'Anno',
+  tagline: 'Anno 是一个可监控、可追踪、简单易用、高性能的微服引擎务框架',
+  url: 'https://github.com/duyanming/Anno.Core',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'viper', // Usually your GitHub org/user name.
-  projectName: 'viper', // Usually your repo name.
+  organizationName: 'Anno', // Usually your GitHub org/user name.
+  projectName: 'Anno', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'Viper',
+      title: 'Anno',
       logo: {
         alt: 'Anno Logo',
         src: 'img/logo.jpg',
@@ -32,16 +32,21 @@ module.exports = {
           position: 'right'
         },
         {
+          href: 'https://github.com/duyanming/Viper',
+          label: 'Viper面板',
+          position: 'right'
+        },
+        {
           label: "仓库",
           position: "right",
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/duyanming/Viper",
+              href: "https://github.com/duyanming/Anno.Core",
             },
             {
               label: "Gitee",
-              href: "https://gitee.com/duyanming/Viper",
+              href: "https://gitee.com/duyanming/anno.core",
             },
           ],
         },
@@ -63,8 +68,8 @@ module.exports = {
               to: 'docs',
             },
             {
-              label: '指南',
-              to: 'docs',
+              label: '体验',
+              to: 'http://140.143.207.244/',
             },
           ],
         },
@@ -77,7 +82,7 @@ module.exports = {
           },
             {
               label: '问题',
-              href: 'https://github.com/duyanming/Viper/issues',
+              href: 'https://github.com/duyanming/Anno.Core/issues',
             }
           ],
         },
@@ -86,16 +91,16 @@ module.exports = {
           items: [           
             {
               label: 'GitHub',
-              href: 'https://github.com/duyanming/Viper'
+              href: 'https://github.com/duyanming/Anno.Core'
             },
             {
               label: '码云',
-              href: 'https://gitee.com/duyanming/Viper'
+              href: 'https://gitee.com/duyanming/Anno.Core'
             }
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Viper.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Anno.`,
     },
   },
   presets: [
@@ -106,13 +111,13 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/duyanming/duyanming.github.com/tree/master/viper',
+            'https://github.com/duyanming/duyanming.github.com/tree/main/viper',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/duyanming/duyanming.github.com/tree/master/viper',
+            'https://github.com/duyanming/duyanming.github.com/tree/main/viper',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
