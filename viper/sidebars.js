@@ -3,7 +3,7 @@ module.exports = {
     {
       type: "category",
       label: "1. 框架介绍",
-      items: ['get-started','get-started1.2'],
+      items: ['startup','get-started','get-started1.2'],
     },
     {
       type: "category",
