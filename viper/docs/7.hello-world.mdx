@@ -5,11 +5,11 @@ sidebar_label: 7.1 添加HelloWorld服务
 ---
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-　　　　Anno微服务引擎使用非常简单，Anno只专于与服务治理，对业务代码深度解耦。下面我们来写一个Hello World 服务，以此作为引子
+　　Anno微服务引擎使用非常简单，Anno只专于与服务治理，对业务代码深度解耦。下面我们来写一个Hello World 服务，以此作为引子
 让我们了解Anno服务的创建有多简单。
 
 ### 7.1 新建一个.Net Core 的控制台程序
-　　　让我们新建一个.Net Core 的控制台程序作为服务插件的宿主程序，当然你也可以新建一个Window服务程序、Winform程序作为插件宿主程序。
+　　让我们新建一个.Net Core 的控制台程序作为服务插件的宿主程序，当然你也可以新建一个Window服务程序、Winform程序作为插件宿主程序。
 这里以.Net Core控制台程序为例。 
 
 <div style={{width:"100%",textAlign:"center"}}>
@@ -18,7 +18,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 ### 7.2 添加Anno依赖
 
-　　　添加依赖需要两个，一个是 `Anno.EngineData` ，一个是`Anno.Rpc.Server`。`Anno.Rpc.Server`是Anno服务的核心程序包，
+　　添加依赖需要两个，一个是 `Anno.EngineData` ，一个是`Anno.Rpc.Server`。`Anno.Rpc.Server`是Anno服务的核心程序包，
 `Anno.EngineData` 是一个可选程序包，在这里主要是因为业务插件（例如 `Anno.Plugs.ViperService`）是一个和通讯解耦的模块，
 为了方便服务之间也可以调用 `Anno.EngineData` 里面声明了服务之间调用的接口约束。Thrift、Grpc 插件里面做实现，
 以此来解耦通讯组件和业务插件。
