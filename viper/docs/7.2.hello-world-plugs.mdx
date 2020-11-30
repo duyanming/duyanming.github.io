@@ -22,7 +22,7 @@ Install-Package Anno.EngineData -Version 1.0.2.6
 ```
 增加一个插件启动初始化配置类`HelloWorldBootStrap`
 
-```java
+```csharp
 using Anno.EngineData;
 using System;
 
@@ -45,7 +45,7 @@ namespace Anno.Plugs.HelloWorldService
 
 增加一个业务模块 `HelloWorldViperModule`
 
-```java
+```csharp
 /****************************************************** 
 Writer:Du YanMing
 Mail:dym880@163.com
@@ -65,27 +65,36 @@ namespace Anno.Plugs.HelloWorldService
     public class HelloWorldViperModule: BaseModule
     {
         [AnnoInfo(Desc = "世界你好啊SayHi")]
-        public dynamic SayHello([AnnoInfo(Desc = "称呼")] string name, [AnnoInfo(Desc = "年龄")] int age) {
+        public dynamic SayHello([AnnoInfo(Desc = "称呼")] string name,[AnnoInfo(Desc = "年龄")] int age)
+        {
             Dictionary<string, string> input = new Dictionary<string, string>();
             input.Add("vName",name);
             input.Add("vAge", age.ToString());
-            var soEasyMsg = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<string>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input)).OutputData;
-            return new { HelloWorldViperMsg = $"{name}你好啊，今年{age}岁了", SoEasyMsg= soEasyMsg };
+            var soEasyMsg = Newtonsoft.Json.JsonConvert
+            .DeserializeObject<ActionResult<string>>
+            (this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input))
+            .OutputData;
+            return new { HelloWorldViperMsg = $"{name}你好啊，今年{age}岁了",
+             SoEasyMsg= soEasyMsg };
         }
 
         [AnnoInfo(Desc = "两个整数相减等于几？我来帮你算（x-y=?）")]
-        public int Subtraction([AnnoInfo(Desc = "整数X")] int x, [AnnoInfo(Desc = "整数Y")] int y)
+        public int Subtraction([AnnoInfo(Desc = "整数X")] int x,
+         [AnnoInfo(Desc = "整数Y")] int y)
         {
             return x - y;
         }
         [AnnoInfo(Desc = "买个商品吧，双十一马上就来了")]
-        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName, [AnnoInfo(Desc = "商品数量")] int number)
+        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName,
+         [AnnoInfo(Desc = "商品数量")] int number)
         {
             double price = new Random().Next(2, 90);
             Dictionary<string, string> input = new Dictionary<string, string>();
             input.Add("productName", productName);
             input.Add("number", number.ToString());
-            var product = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<ProductDto>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "BuyProduct", input)).OutputData;
+            var product = Newtonsoft.Json.JsonConvert.
+            DeserializeObject<ActionResult<ProductDto>>(this.InvokeProcessor
+            ("Anno.Plugs.SoEasy", "AnnoSoEasy", "BuyProduct", input)).OutputData;
             product.CountryOfOrigin = $"中国北京中转--{ product.CountryOfOrigin}";
             return product;
         }
@@ -96,7 +105,7 @@ namespace Anno.Plugs.HelloWorldService
 
 增加一个业务模块 `Anno.Plugs.SoEasyService` `AnnoSoEasyModule`
 
-```java
+```csharp
 /****************************************************** 
 Writer:Du YanMing
 Mail:dym880@163.com
@@ -152,7 +161,8 @@ namespace Anno.Plugs.SoEasyService
             return x + y;
         }
         [AnnoInfo(Desc = "买个商品吧，双十一马上就来了")]
-        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName, [AnnoInfo(Desc = "商品数量")] int number)
+        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName
+        , [AnnoInfo(Desc = "商品数量")] int number)
         {
             double price = new Random().Next(2, 90);
             return new ProductDto() { Name=productName,Price=price ,Number=number, CountryOfOrigin="中国台湾"};

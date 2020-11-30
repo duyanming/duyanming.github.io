@@ -5,9 +5,12 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'Anno', // Usually your GitHub org/user name.
-  projectName: 'Anno', // Usually your repo name.
+  organizationName: 'duyanming', // Usually your GitHub org/user name.
+  projectName: 'Anno.Core', // Usually your repo name.
   themeConfig: {
+    prism: {
+      additionalLanguages: ["powershell", "csharp", "sql"],
+    },
     navbar: {
       title: 'Anno',
       logo: {
@@ -75,11 +78,11 @@ module.exports = {
         },
         {
           title: '社区',
-          items: [ 
+          items: [
             {
-            label: '博客',
-            to: 'https://www.cnblogs.com/duyanming/'
-          },
+              label: '博客',
+              to: 'https://www.cnblogs.com/duyanming/'
+            },
             {
               label: '问题',
               href: 'https://github.com/duyanming/Anno.Core/issues',
@@ -88,7 +91,7 @@ module.exports = {
         },
         {
           title: '更多',
-          items: [           
+          items: [
             {
               label: 'GitHub',
               href: 'https://github.com/duyanming/Anno.Core'

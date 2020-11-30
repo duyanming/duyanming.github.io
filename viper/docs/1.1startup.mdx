@@ -1,15 +1,20 @@
 ---
 id: startup
-title: 1.1 框架概述
-sidebar_label: 1.1 框架概述
+title: 1.1 Anno 分布式微服务开发框架
+sidebar_label: 1.1  Anno 框架概述
 slug: /
 ---
 
-## Anno 分布式微服务开发框架
+## 
 
 **Anno 是一个分布式开发框架,专注于服务治理、监控、链路追踪。RPC可选用高性能跨语言的Thrift（推荐）、Grpc。同时支持 .net core 、.net framework、Java。**
 [![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.svg)](https://www.nuget.org/packages/Anno.EngineData)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/duyanming/Anno.Core/master/LICENSE)
+
+## Anno 三大特色
+- <strong>资源监控</strong>
+- <strong>链路追踪</strong>
+- <strong>集群接口文档</strong>
 
 ![Dashboard](https://s1.ax1x.com/2020/09/26/0iRcIU.png)
 
@@ -68,12 +73,17 @@ Package name                           |Description     | Version               
 
 ### 注册中心(AnnoCenter)
 
-　　AnnoCenter 是一个服务注册中心，主要职责是 发现服务（例如订单服务A、库存服务B）、存储服务配置信息、健康检查、简单键值KV存储。客户端定时从注册中心获取服务信息缓存到本地。即便注册中心宕机也不影响整个集群运行，因为客户端已经缓存了整个集群的服务信息。但是新加入的服务无法注册进来，需要启动注册中心才可以。
+　　AnnoCenter 是一个服务注册中心，主要职责是 发现服务（例如订单服务A、库存服务B）、存储服务配置信息、健康检查、简单键值KV存储。
+
+　　客户端定时从注册中心获取服务信息缓存到本地。即便注册中心宕机也不影响整个集群运行，因为客户端已经缓存了整个集群的服务信息。但是新加入的服务无法注册进来，需要启动注册中心才可以。
+
 　　客户端(例如：ApiGateway )发送过来请求时,客户端类库从本地缓存找出能够处理此请求的服务列表（这个过程可能涉及权重等策略）选择一个去处理请求，然后返回，如果失败会有重试机制。
+
 　　注册中心会定时对每个服务做健康检查，如果连接不上服务则标记此服务为亚健康状态，此时不会将此服务踢出也不会将自服务返回给客户单使用，然后开始重复做检查。如果一分钟内恢复正常则重新标记为健康状态切可以对外提供服务，否则永久踢出服务。
     
-
-    服务注册中心（AnnoCenter） 是整个集群第一个需要运行起来的程序。
+:::note 说明
+***服务注册中心***（AnnoCenter） 是整个集群第一个需要运行起来的程序。
+:::
 
 配置文件：只需要配置端口、超时时间即可。服务节点信息会在服务注册进来的时候自动写入
 
@@ -93,7 +103,13 @@ Package name                           |Description     | Version               
       <Port>6660</Port>
       <TimeOut>120000</TimeOut>
       <Servers>
-        <dc name="Anno.Plugs.TraceService,Anno.Plugs.DLockService,Anno.Plugs.EsLogService" nickname="App001" ip="10.112.93.122" port="6659" timeout="20000" weight="1" />
+        <dc 
+        name="Anno.Plugs.TraceService,Anno.Plugs.DLockService,Anno.Plugs.EsLogService" 
+        nickname="App001" 
+        ip="10.112.93.122"
+        port="6659" 
+        timeout="20000" 
+        weight="1" />
       </Servers>
     </configuration>
 
@@ -107,7 +123,7 @@ Packages
     初始化配置
     实现接口：IPlugsConfigurationBootstrap
 
-```java
+```csharp
 using Anno.EngineData;
 using System;
 
@@ -148,7 +164,7 @@ namespace Anno.Plugs.HelloWorldService
 功能模块实现
 继承: BaseModule
 
-```java
+```csharp
 /****************************************************** 
 Writer:Du YanMing
 Mail:dym880@163.com
@@ -174,7 +190,8 @@ namespace Anno.Plugs.HelloWorldService
             Dictionary<string, string> input = new Dictionary<string, string>();
             input.Add("vname", name);
             input.Add("vage", age.ToString());
-            var soEasyMsg = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<string>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input)).OutputData;
+            var soEasyMsg = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<string>>(
+                this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input)).OutputData;
             return new { HelloWorldViperMsg = $"{name}你好啊，今年{age}岁了", SoEasyMsg = soEasyMsg };
         }
     
@@ -184,13 +201,16 @@ namespace Anno.Plugs.HelloWorldService
             return x - y;
         }
         [AnnoInfo(Desc = "买个商品吧，双十一马上就来了")]
-        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName, [AnnoInfo(Desc = "商品数量")] int number)
+        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName
+        , [AnnoInfo(Desc = "商品数量")] int number)
         {
             double price = new Random().Next(2, 90);
             Dictionary<string, string> input = new Dictionary<string, string>();
             input.Add("productName", productName);
             input.Add("number", number.ToString());
-            var product = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<ProductDto>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "BuyProduct", input)).OutputData;
+            var product = Newtonsoft.Json.JsonConvert
+            .DeserializeObject<ActionResult<ProductDto>>(this.InvokeProcessor("Anno.Plugs.SoEasy"
+            , "AnnoSoEasy", "BuyProduct", input)).OutputData;
             product.CountryOfOrigin = $"中国北京中转--{ product.CountryOfOrigin}";
             return product;
         }       

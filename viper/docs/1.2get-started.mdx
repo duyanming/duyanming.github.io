@@ -1,7 +1,7 @@
 ---
 id: get-started
-title: 1.2 Viper面板
-sidebar_label: 1.2 Viper面板
+title: 1.2 Viper 面板简介
+sidebar_label: 1.2 Viper 面板简介
 ---
 
 >Viper 是.NET5.0平台下基于Anno开发的Dashboard面板项目
@@ -64,7 +64,13 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
   <TimeOut>120000</TimeOut>
   <Servers>
        <!--dc 注册到注册中心的 服务节点 （下面的内容是ViperService 启动后自动写入的内容）-->
-    <dc name="Anno.Plugs.LogicService,Anno.Plugs.TraceService,Anno.Plugs.ViperService" nickname="ViperService-01" ip="100.100.100.9" port="7011" timeout="20000" weight="1" />
+    <dc 
+      name="Anno.Plugs.LogicService,Anno.Plugs.TraceService,Anno.Plugs.ViperService" 
+      nickname="ViperService-01" 
+      ip="100.100.100.9" 
+      port="7011" 
+      timeout="20000" 
+      weight="1" />
   </Servers>
 </configuration>
 ```
@@ -257,16 +263,18 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 
 ### 2.1 Server配置
 
-```java
+```csharp
 	//指定EventHandler的 所在程序集
 	var funcs = Anno.Const.Assemblys.Dic.Values.ToList();
                 #region RabbitMQEventBus
                 //消费失败通知
 
-                RabbitMQEventBus.Instance.ErrorNotice += (string exchange, string routingKey, Exception exception, string body) =>
-                        {
-                            Log.Fatal(new { exchange, routingKey, exception, body }, typeof(RabbitMQEventBus));
-                        };
+                RabbitMQEventBus.Instance.ErrorNotice +=
+                 (string exchange, string routingKey, Exception exception, string body) =>
+                {
+                    Log.Fatal(new { exchange, routingKey, exception, body }
+                    , typeof(RabbitMQEventBus));
+                };
                 EventBusSetting.Default.RabbitConfiguration = new RabbitConfiguration()
                 {
                     HostName = "192.168.100.173",
@@ -279,7 +287,8 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 
                 #endregion
                 #region InMemory EventBus
-                EventBus.Instance.ErrorNotice += (string exchange, string routingKey, Exception exception, string body) =>
+                EventBus.Instance.ErrorNotice += 
+                (string exchange, string routingKey, Exception exception, string body) =>
                 {
                     Log.Fatal(new { exchange, routingKey, exception, body }, typeof(EventBus));
                 };
@@ -304,7 +313,7 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 
 ### 2.3 EventHandler配置
 
-```java
+```csharp
 	
 	namespace Anno.Plugs.SamsundotService.EventHandler
 	{
@@ -315,14 +324,15 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 	    {
 	        public void Handler(FirstMessageEvent entity)
 	        {
-	            Log.Log.Info(new { Plugs= "Samsundot",Entity=entity },typeof(FirstMessageEventHandler));
+	            Log.Log.Info(new { Plugs= "Samsundot",Entity=entity }
+              ,typeof(FirstMessageEventHandler));
 	        }
 	    }
 	}
 
 ```
 
-```java
+```csharp
 	
 	namespace Anno.Plugs.YYTestService.EventHandler
 	{
@@ -333,7 +343,8 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 	    {
 	        public void Handler(FirstMessageEvent entity)
 	        {
-	            Log.Log.Info(new { Plugs = "YYTest", Entity = entity },               typeof(FirstMessageEventHandler));
+	            Log.Log.Info(new { Plugs = "YYTest", Entity = entity }
+              , typeof(FirstMessageEventHandler));
 	        }
 	    }
 	    /// <summary>
@@ -343,8 +354,10 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 	    {
 	        public void Handler(FirstMessageEvent entity)
 	        {
-	            Log.Log.Info(new { Plugs = "YYTest",Handle= "FirstMessageExceptionEventHandler", Entity = entity }, typeof(FirstMessageEventHandler));
-	            throw new Exception("异常消费演示，测试 消费失败通知 From FirstMessageExceptionEventHandler!");
+	            Log.Log.Info(new { Plugs = "YYTest",Handle= "FirstMessageExceptionEventHandler"
+              , Entity = entity }, typeof(FirstMessageEventHandler));
+	            throw new Exception(
+                "异常消费演示，测试 消费失败通知 From FirstMessageExceptionEventHandler!");
 	        }
 	    }
 	}
@@ -359,7 +372,7 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 Install-Package Anno.EngineData.Cache
 ```
 
-```java
+```csharp
 	
 using System;
 using System.Collections.Generic;
@@ -395,7 +408,7 @@ namespace Anno.Plugs.CacheRateLimitService
 Install-Package Anno.EngineData.RateLimit
 ```
 
- ```java	
+ ```csharp	
 using System;
 using System.Collections.Generic;
 using System.Text;

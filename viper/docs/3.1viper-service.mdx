@@ -73,9 +73,11 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
     </IocDll>
     <appSettings>
         <!-- 数据库连接字符串 Mysql-->
-        <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
+        <add key="ConnStr" 
+             value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
         <!--
-        redisConn Redis 连接字符串 127.0.0.1:6379,abortConnect=false,allowAdmin =true,keepAlive=180
+        redisConn Redis 连接字符串 127.0.0.1:6379
+        ,abortConnect=false,allowAdmin =true,keepAlive=180
         redisPrefix Key 前缀 Anno:
         redisExpiryDate Key 有效期  单位（分钟） 20
         redisSwitch 是否开启数据库 false 不开启 false
@@ -103,7 +105,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 正常情况下只需要一下几行代码就可以到顶服务宿主程序
 
-```java
+```csharp
 using System;
 using System.Linq;
 using System.Reflection;
@@ -139,7 +141,8 @@ namespace ViperService
             {
                 //Anno.Const.SettingService.TraceOnOff = true;
                 var autofac = IocLoader.GetAutoFacContainerBuilder();
-                autofac.RegisterType(typeof(RpcConnectorImpl)).As(typeof(IRpcConnector)).SingleInstance();
+                autofac.RegisterType(typeof(RpcConnectorImpl))
+                .As(typeof(IRpcConnector)).SingleInstance();
             });
         }
     }
@@ -156,7 +159,7 @@ namespace ViperService
 :::
 ### 5. 接口文档写入 注册中心`ViperCenter`
 
-```java {6-60} title="这段代码直接黏贴就可以不用修改"
+```csharp {6-60} title="这段代码直接黏贴就可以不用修改"
  Bootstrap.StartUp(args, () =>
             {
                 //Anno.Const.SettingService.TraceOnOff = true;
@@ -183,7 +186,8 @@ namespace ViperService
                         return parameter;
                     }).ToList();
                     string methodDesc = String.Empty;
-                    var mAnnoInfoAttributes = item.Value.RoutMethod.GetCustomAttributes<AnnoInfoAttribute>().ToList();
+                    var mAnnoInfoAttributes = item.Value.RoutMethod
+                    .GetCustomAttributes<AnnoInfoAttribute>().ToList();
                     if (mAnnoInfoAttributes.Count > 0)
                     {
                         methodDesc = mAnnoInfoAttributes.First().Desc;
@@ -192,13 +196,16 @@ namespace ViperService
                     {
                         App = Anno.Const.SettingService.AppName,
                         Id = $"{Anno.Const.SettingService.AppName}:{item.Key}",
-                        Value = Newtonsoft.Json.JsonConvert.SerializeObject(new DataValue { Desc = methodDesc, Name = item.Value.RoutMethod.Name, Parameters = parameters })
+                        Value = Newtonsoft.Json.JsonConvert.SerializeObject
+                        (new DataValue { Desc = methodDesc, Name = item.Value.RoutMethod.Name
+                        , Parameters = parameters })
                     });
                 }
                 Dictionary<string, string> input = new Dictionary<string, string>();
                 input.Add(CONST.Opt, CONST.DeleteByApp);
                 input.Add(CONST.App, Anno.Const.SettingService.AppName);
-                var del = Newtonsoft.Json.JsonConvert.DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
+                var del = Newtonsoft.Json.JsonConvert
+                .DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
                 if (del.Status == false)
                 {
                     Anno.Log.Log.Error(del);
@@ -206,7 +213,8 @@ namespace ViperService
                 input.Clear();
                 input.Add(CONST.Opt, CONST.UpsertBatch);
                 input.Add(CONST.Data, Newtonsoft.Json.JsonConvert.SerializeObject(routings));
-                var rlt = Newtonsoft.Json.JsonConvert.DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
+                var rlt = Newtonsoft.Json.JsonConvert
+                .DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
                 if (rlt.Status == false)
                 {
                     Anno.Log.Log.Error(rlt);
