@@ -6,7 +6,7 @@ sidebar_label: 1.2 Viper 面板简介
 
 >Viper 是.NET5.0平台下基于Anno开发的Dashboard面板项目
 
-##  [Viper 在线演示地址](http://140.143.207.244) 
+##  [在线演示地址](http://140.143.207.244) 
 
  http://140.143.207.244
 
@@ -18,12 +18,7 @@ sidebar_label: 1.2 Viper 面板简介
 
 ##  [Java 实现 ](https://github.com/duyanming/anno.thrift-parent) 
 
-    https://github.com/duyanming/anno.thrift-parent
-
-## Anno 分布式开发框架
-
-Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc、thrift。自带服务发现、调用链追踪、Cron 调度、限流、事件总线、CQRS 、DDD、类似MVC的开发体验，插件化开发，同时支持 .net core3.1 、.net frameworker4.6.1
-、Java
+https://github.com/duyanming/anno.thrift-parent
 
 ## 1、运行Viper
 
@@ -39,7 +34,7 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
 - 1、Viper\database\Viper20200926184831.sql
 
 - 2、修改viperService 数据库连接字符串
- >配置文件：`Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config`
+ >配置文件：`Viper\ViperService\bin\Debug\net5\Anno.config`
 
 ```xml
 <appSettings>
@@ -52,7 +47,7 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
 
 ### 第一步：启动注册中心
 
->配置文件：`Viper\ViperCenter\bin\Debug\netcoreapp3.1\Anno.config`
+>配置文件：`Viper\ViperCenter\bin\Debug\net5\Anno.config`
 
 
 ``` xml
@@ -77,7 +72,7 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
 
 
 
--    进入项目文件夹 `Viper\ViperCenter\bin\Debug\netcoreapp3.1`
+-    进入项目文件夹 `Viper\ViperCenter\bin\Debug\net5`
 -    运行命令 `dotnet ViperCenter.dll`
 -    看到下图 说明运行成功
 
@@ -91,7 +86,7 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
 
 ### 第二步：启动 ViperService
 
->配置文件：`Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config`
+>配置文件：`Viper\ViperService\bin\Debug\net5\Anno.config`
 
 
 ``` xml
@@ -129,16 +124,6 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
   <appSettings>
     <!-- 数据库连接字符串 Mysql-->
     <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
-    <!--
-    redisConn Redis 连接字符串 127.0.0.1:6379,abortConnect=false,allowAdmin =true,keepAlive=180
-    redisPrefix Key 前缀 Anno:
-    redisExpiryDate Key 有效期  单位（分钟） 20
-    redisSwitch 是否开启数据库 false 不开启 false
-    -->
-    <add key="redisConn" value=""/>
-    <add key="redisPrefix" value="SW:"/>
-    <add key="redisExpiryDate" value="20"/>
-    <add key="redisSwitch" value="false"/>
   </appSettings>
 </configuration>
 ```
@@ -160,7 +145,7 @@ Anno 是一个微服务快速开发框架，底层通讯可以随意切换 grpc�
 
  `ViperService` 和 `ViperCenter` 可以不在同一台电脑，`ViperService`也可以采用不同端口运行多个`Service` 。`ViperCenter` 可以根据客户端请求自动负载均衡。高级用法随后介绍。
 
-- 进入项目文件夹 `Viper\ViperService\bin\Debug\netcoreapp3.1` 
+- 进入项目文件夹 `Viper\ViperService\bin\Debug\net5` 
 - 运行命令 `dotnet ViperService.dll`
 - 看到下图 说明 `ViperService` 成功运行 并且已经注册到 注册中心（ViperCenter）运行成功
 
