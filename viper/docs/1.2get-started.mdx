@@ -176,11 +176,25 @@ https://github.com/duyanming/anno.thrift-parent
         "limitSize": 100        //桶默认大小
       }
     ],
-    "IpLimit": {                // 根据客户端IP限流
+    "DefaultIpLimit": {           // 默认客户端IP限流
       "timeSpan": 1,
       "rps": 100,
       "limitSize": 100
     },
+    "IpLimits": [                 //针对不同IP设置不同的IP限流策略
+      {
+        "ipMatch": "0.0.0.1",     //ipMatch参考IPAddressRange
+        "timeSpan": 1,
+        "rps": 100,
+        "limitSize": 100
+      },
+      {
+        "ipMatch": "192.168.0.10 - 192.168.10.20",
+        "timeSpan": 1,
+        "rps": 100,
+        "limitSize": 100
+      }
+    ],
     "White": [                  //白名单
       "0.0.0.1",
       "192.168.1.2",
