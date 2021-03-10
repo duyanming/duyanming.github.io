@@ -49,7 +49,7 @@ module.exports = {
             },
             {
               label: "Gitee",
-              href: "https://gitee.com/duyanming/anno.core",
+              href: "https://gitee.com/dotnetchina/anno.core",
             },
           ],
         },
@@ -98,7 +98,7 @@ module.exports = {
             },
             {
               label: '码云',
-              href: 'https://gitee.com/duyanming/Anno.Core'
+              href: 'https://gitee.com/dotnetchina/anno.core'
             }
           ],
         },
