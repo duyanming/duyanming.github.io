@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[31],{96:function(s){s.exports=JSON.parse('{"allTagsPath":"/anno/blog/tags","slug":"microservices","name":"microservices","count":1,"permalink":"/anno/blog/tags/microservices"}')}}]);
