@@ -38,7 +38,6 @@ h
 
 .featureImage {
   height: 200px;
-  width: 200px;
 }
 
 .cus-buttom {
@@ -55,4 +54,9 @@ h
 
 .subtitle {
   color: #fff !important;
+}
+.imgHome{
+  margin-right: 5px;
+  width: 100%;
+  text-align: center;
 }

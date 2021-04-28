@@ -1,8 +1,8 @@
 module.exports = {
   title: 'Anno',
-  tagline: 'Anno 是一个可监控、可追踪、简单易用、高性能的微服引擎务框架',
+  tagline: 'Anno 是一个可监控、可追踪、简单易用、高性能的微服务引擎框架',
   url: 'https://github.com/duyanming/Anno.Core',
-  baseUrl: '/',
+  baseUrl: '/anno/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'duyanming', // Usually your GitHub org/user name.

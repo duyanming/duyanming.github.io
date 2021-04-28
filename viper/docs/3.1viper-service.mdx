@@ -17,24 +17,24 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 运行数据库脚本创建数据库
 
 ```sql
-1、Viper\database\Viper20200926184831.sql
+1、Viper\database\Viper20210201_01.sql
 ```
 
 ## 3.1.2 控制台程序
 ### 1. 取名 `ViperService`
 ### 2. 添加Nuget包
 >```shell
- dotnet add package Anno.Rpc.Server --version 1.0.2.2
- dotnet add package Anno.EngineData --version 1.0.2.4
+ dotnet add package Anno.Rpc.Server --version 1.0.3.3
+ dotnet add package Anno.EngineData --version 1.0.3.3
  ```
 
 :::tip 开发者可以根据喜好选择底层`RPC`通讯中间件
 
 &nbsp;&nbsp;目前支持两种`Thrift`、`Grpc`,推荐`Thrift`
 
-&nbsp;&nbsp;` dotnet add package Anno.Rpc.Server --version 1.0.2.2` 为Thrift方式
+&nbsp;&nbsp;` dotnet add package Anno.Rpc.Server --version 1.0.3.3` 为Thrift方式
 
-&nbsp;&nbsp;`dotnet add package Anno.Rpc.ClientGrpc --version 1.0.1.5` 为Grpc方式
+&nbsp;&nbsp;`dotnet add package Anno.Rpc.ClientGrpc --version 1.0.3.3` 为Grpc方式
 :::
 
 ### 3. 配置文件
@@ -160,65 +160,25 @@ namespace ViperService
 ### 5. 接口文档写入 注册中心`ViperCenter`
 
 ```csharp {6-60} title="这段代码直接黏贴就可以不用修改"
- Bootstrap.StartUp(args, () =>
+  Bootstrap.StartUp(args, () =>//服务配置文件读取完成后回调(服务未启动)
             {
                 //Anno.Const.SettingService.TraceOnOff = true;
+
+                /*
+                 * 功能插件选择是Thrift还是 Grpc
+                 * Install-Package Anno.Rpc.Client -Version 1.0.3.3 Thrift
+                 * Install-Package Anno.Rpc.ServerGrpc -Version 1.0.3.3 Grpc
+                 * 此处为 Thrift
+                 */
                 var autofac = IocLoader.GetAutoFacContainerBuilder();
                 autofac.RegisterType(typeof(RpcConnectorImpl)).As(typeof(IRpcConnector)).SingleInstance();
-            }, () =>
-            { //startUp  CallBack
-                List<AnnoData> routings = new List<AnnoData>();
-                foreach (var item in Anno.EngineData.Routing.Routing.Router)
-                {
-                    if (item.Value.RoutMethod.Name == "get_ActionResult")
-                    {
-                        continue;
-                    }
-                    var parameters = item.Value.RoutMethod.GetParameters().ToList().Select(it =>
-                    {
-                        var parameter = new ParametersValue
-                        { Name = it.Name, Position = it.Position, ParameterType = it.ParameterType.FullName };
-                        var pa = it.GetCustomAttributes<AnnoInfoAttribute>().ToList();
-                        if (pa.Any())
-                        {
-                            parameter.Desc = pa.First().Desc;
-                        }
-                        return parameter;
-                    }).ToList();
-                    string methodDesc = String.Empty;
-                    var mAnnoInfoAttributes = item.Value.RoutMethod
-                    .GetCustomAttributes<AnnoInfoAttribute>().ToList();
-                    if (mAnnoInfoAttributes.Count > 0)
-                    {
-                        methodDesc = mAnnoInfoAttributes.First().Desc;
-                    }
-                    routings.Add(new AnnoData()
-                    {
-                        App = Anno.Const.SettingService.AppName,
-                        Id = $"{Anno.Const.SettingService.AppName}:{item.Key}",
-                        Value = Newtonsoft.Json.JsonConvert.SerializeObject
-                        (new DataValue { Desc = methodDesc, Name = item.Value.RoutMethod.Name
-                        , Parameters = parameters })
-                    });
-                }
-                Dictionary<string, string> input = new Dictionary<string, string>();
-                input.Add(CONST.Opt, CONST.DeleteByApp);
-                input.Add(CONST.App, Anno.Const.SettingService.AppName);
-                var del = Newtonsoft.Json.JsonConvert
-                .DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
-                if (del.Status == false)
-                {
-                    Anno.Log.Log.Error(del);
-                }
-                input.Clear();
-                input.Add(CONST.Opt, CONST.UpsertBatch);
-                input.Add(CONST.Data, Newtonsoft.Json.JsonConvert.SerializeObject(routings));
-                var rlt = Newtonsoft.Json.JsonConvert
-                .DeserializeObject<AnnoDataResult>(StorageEngine.Invoke(input));
-                if (rlt.Status == false)
-                {
-                    Anno.Log.Log.Error(rlt);
-                }
+            }
+            , () =>//服务启动后的回调方法
+            {
+                /**
+                 * 服务Api文档写入注册中心
+                 */
+                Bootstrap.ApiDoc();           
             });
 ```
 ### 6 运行服务宿主程序

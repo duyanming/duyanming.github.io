@@ -9,7 +9,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 
 <div style={{width:"100%",textAlign:"center"}}>
-    <img src={useBaseUrl("img/router01.jpg")} />
+    <img src={useBaseUrl("img/router.jpg")} />
 </div>
 
   　　　 Bootstrap.StartUp(args命令行参数, 依赖注入构建前回调函数,服务启动后回调函数,依赖注入类型autofac、DependencyInjection);
@@ -24,8 +24,8 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
                 /*
                  * 功能插件选择是Thrift还是 Grpc
-                 * Install-Package Anno.Rpc.Client -Version 1.0.2.6 Thrift
-                 * Install-Package Anno.Rpc.ServerGrpc -Version 1.0.1.5 Grpc
+                 * Install-Package Anno.Rpc.Client -Version 1.0.3.3 Thrift
+                 * Install-Package Anno.Rpc.ServerGrpc -Version 1.0.3.3 Grpc
                  * 此处为 Thrift
                  */
                 var autofac = IocLoader.GetAutoFacContainerBuilder();
@@ -36,7 +36,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
                 /**
                  * 服务Api文档写入注册中心
                  */
-                ApiDoc();               
+                Bootstrap.ApiDoc();                 
             });
 ```
 　　　<b>接口文档描述来自方法或者参数的 [AnnoInfo(Desc = "获取服务路由信息")]</b>
@@ -47,7 +47,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 
 <div style={{width:"100%",textAlign:"center"}}>
-    <img src={useBaseUrl("img/router02.jpg")} />
+    <img src={useBaseUrl("img/router_detail.jpg")} />
 </div>
 　　　填写接口需要的参数，也可以根据 具体需求增加或者删除参数。（接口里面没有形参也可以通过this.Input获取参数类似mvc里面的 response）
 <div style={{width:"100%",textAlign:"center"}}>
