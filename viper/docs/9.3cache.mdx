@@ -5,4 +5,78 @@ sidebar_label: 9.3 缓存
 ---
 
 
-9.3 缓存
+##9.3.1 什么是缓存？
+首先我们要知道缓存其实就是一个临时的存储器。
+缓存有 ：cookie、session、application、cache、redi
+##9.3.2 缓存的类型
+缓存包含 基于内存的内存缓存，基于Redis的分布式缓存
+##9.3.3 Anno如何使用缓存？
+
+####具体案例（基于内存的缓存方式）
+首先安装缓存中间件 Install-Package Anno.EngineData.Cache
+然后在需要添加缓存的Action或者方法上加上特性[CacheLRU(5,6,true)]即可。
+新建Anno.Plugs.CacheRateLimitService插件
+```
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Anno.EngineData;
+using Anno.EngineData.Cache;
+
+
+namespace Anno.Plugs.CacheRateLimitService
+{
+    public class CacheModule : BaseModule
+    {
+        /*
+        参数1：缓存长度
+        参数2：缓存存活时间
+        参数3：缓存存活时间是否滑动
+        */
+        [CacheLRU(5,6,true)]
+        public ActionResult Cache(string msg)
+        {
+            Console.WriteLine(msg);
+            return new ActionResult(true, null,null,msg);
+        }
+    }
+}
+```
+然后请求插件来进行缓存测试即可。
+####具体案例（基于Redis的缓存方式）
+首先引用作者的Anno.Redis类库 位置在Common->Anno.Redis
+在RedisHelper中修改默认的连接字符串
+```
+static RedisHelper()
+        {
+            RedisConfigure.Default().SetDefault("127.0.0.1:6379,password=123456,abortConnect=false,allowAdmin =true,keepAlive=180", "", TimeSpan.FromMinutes(20), false);
+        }
+       
+        private static readonly string Coonstr = RedisConfigure.Default().Conn; 
+```
+然后在使用缓存的地方调用RedisHelper即可。
+**使用案例**
+```
+  #region Redis缓存
+            /*
+            参数1 缓存的Key
+            参数2 缓存的Value
+            参数3 缓存的过期事件
+             */
+            RedisHelper.Set("MyRedis","123",10);
+            RedisHelper.Get("MyRedis");
+            #endregion
+```
+```
+       #region Redis 发布订阅
+
+            RedisHelper.Subscribe("WCServer", (cb) =>
+            {
+                Console.WriteLine("获取Redis+");
+                Console.WriteLine(cb);
+                Console.WriteLine("获取Redis-");
+            });
+            RedisHelper.Publish("WCServer", "我有一些消息发布，发布者：WCServer");
+            Console.WriteLine("End!");
+            #endregion
+```
