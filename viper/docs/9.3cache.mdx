@@ -5,17 +5,18 @@ sidebar_label: 9.3 缓存
 ---
 
 
-##9.3.1 什么是缓存？
+## 9.3.1 什么是缓存？
 首先我们要知道缓存其实就是一个临时的存储器。
-缓存有 ：cookie、session、application、cache、redi
-##9.3.2 缓存的类型
+缓存有 ：cookie、session、application、cache、redis
+## 9.3.2 缓存的类型
 缓存包含 基于内存的内存缓存，基于Redis的分布式缓存
-##9.3.3 Anno如何使用缓存？
+## 9.3.3 Anno如何使用缓存？
 
-####具体案例（基于内存的缓存方式）
+#### 具体案例（基于内存的缓存方式）
 首先安装缓存中间件 Install-Package Anno.EngineData.Cache
 然后在需要添加缓存的Action或者方法上加上特性[CacheLRU(5,6,true)]即可。
 新建Anno.Plugs.CacheRateLimitService插件
+
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Anno.Plugs.CacheRateLimitService
 }
 ```
 然后请求插件来进行缓存测试即可。
-####具体案例（基于Redis的缓存方式）
+#### 具体案例（基于Redis的缓存方式）
 首先引用作者的Anno.Redis类库 位置在Common->Anno.Redis
 在RedisHelper中修改默认的连接字符串
 ```csharp
