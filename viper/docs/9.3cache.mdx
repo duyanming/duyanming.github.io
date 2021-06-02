@@ -16,7 +16,7 @@ sidebar_label: 9.3 缓存
 首先安装缓存中间件 Install-Package Anno.EngineData.Cache
 然后在需要添加缓存的Action或者方法上加上特性[CacheLRU(5,6,true)]即可。
 新建Anno.Plugs.CacheRateLimitService插件
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,7 +46,7 @@ namespace Anno.Plugs.CacheRateLimitService
 ####具体案例（基于Redis的缓存方式）
 首先引用作者的Anno.Redis类库 位置在Common->Anno.Redis
 在RedisHelper中修改默认的连接字符串
-```
+```csharp
 static RedisHelper()
         {
             RedisConfigure.Default().SetDefault("127.0.0.1:6379,password=123456,abortConnect=false,allowAdmin =true,keepAlive=180", "", TimeSpan.FromMinutes(20), false);
@@ -67,7 +67,7 @@ static RedisHelper()
             RedisHelper.Get("MyRedis");
             #endregion
 ```
-```
+```csharp
        #region Redis 发布订阅
 
             RedisHelper.Subscribe("WCServer", (cb) =>
