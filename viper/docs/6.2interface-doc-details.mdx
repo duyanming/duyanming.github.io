@@ -1,0 +1,42 @@
+---
+id: 6_2_introduce
+title: 6.2 集群接口文档详细用法
+sidebar_label: 6.2 集群接口文档详细用法
+---
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## 6.2.1 如何使用接口文档
+我们知道在开发过程中需要对接口进行调试，除了上篇介绍的启动网关在网关处进行接口测试外还可以在服务内部进行接口测试，那如何进行服务内测试呢？
+进行接口测试前需要了解服务间的通讯方式GRPC或者RPC 默认情况Anno使用的是Thrift（可以自行百度）。
+说到RPC请求 需要知道PRC的大致实现细节。当服务注册到AnnoCenter后 所有的服务间的通讯都会通过注册中心来进行请求获取。
+即RPC链接核心：
+```csharp
+  DefaultConfigManager.SetDefaultConnectionPool(1000, Environment.ProcessorCount * 2, 100);
+            DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 7010);
+            Dictionary<string, string> input = new Dictionary<string, string>();
+            input.Add("channel", "Anno.Plugs.WC");
+            input.Add("router", "WCAnno");
+            input.Add("method", "GetUserName");
+            input.Add("UserName", "3131");
+         string Message=   Connector.BrokerDns(input);
+```
+channel：需要请求的插件名称（不带最后的service）
+router：需要请求的Module名称（不带最后的Module）
+method：方法名
+UserName：自定义的参数信息
+可以看到PRC会链接到7010进行插件的数据获取，在不通过网关的情况下也可以进行接口测试，作者给出三种测试方式：
+1 Api调用方式：
+https://gitee.com/duyanming/Anno.Samples/tree/master/SamplesWebApi
+2 添加测试程序
+https://gitee.com/dotnetchina/anno.core/tree/develop/samples/Thrift/Cocas
+3 控制台直接调用方式
+https://gitee.com/duyanming/Anno.Samples/blob/master/SamplesConsoleClient/ConsoleClient/Program.cs
+
+## 6.2.2 Vue 进行接口请求的一些问题
+首先前端的请求可能来自任何终端，当请求终端来自Vue时，我们可能想要自定义一些返回字段而不是Anno定义好的数据。那么我们该如何定义呢？
+我们在运行Viper.Getway需要知道我们的请求是如何被转发到各个服务的。
+通过观察我们发现所有的请求会通过一个中间件扩展进行访问，如图：
+![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/3f45397c58357343003f1c83324e888e)
+我们可以看到请求通过Map进行了一个映射，当然我们可以进行自定义映射如
+```endpoints.Map("SysMg/WCApi", WCApi); ```
+我们只需要在方法的最后进行自定义参数的转换即可实现返回值的自定义。
