@@ -67,3 +67,10 @@ tar -zxvf pmspace20170413.tar.gz
 ``` shell
 cd /proc/3723
 ``` 
+
+### 12、查看java  jar  启动参数
+``` shell
+cd /proc/4349
+jps -lm |grep 4349
+4349 istic-survey.jar -Xms128m -Xmx256m -Dspring.profiles.active=dev -Dserver.port=9016
+``` 
