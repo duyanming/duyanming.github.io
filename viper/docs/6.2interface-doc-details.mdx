@@ -11,6 +11,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 说到RPC请求 需要知道PRC的大致实现细节。当服务注册到AnnoCenter后 所有的服务间的通讯都会通过注册中心来进行请求获取。
 即RPC链接核心：
 ```csharp
+//测试方法如下
   DefaultConfigManager.SetDefaultConnectionPool(1000, Environment.ProcessorCount * 2, 100);
             DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 7010);
             Dictionary<string, string> input = new Dictionary<string, string>();
@@ -19,6 +20,11 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
             input.Add("method", "GetUserName");
             input.Add("UserName", "3131");
          string Message=   Connector.BrokerDns(input);
+        //在插件层可使用以下方式
+        Dictionary<string, string> input = new Dictionary<string, string>();
+            input.Add("vName",name);
+            input.Add("vAge", age.ToString());
+            var soEasyMsg = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<string>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input)).OutputData;
 ```
 channel：需要请求的插件名称（不带最后的service）
 router：需要请求的Module名称（不带最后的Module）
