@@ -30,7 +30,7 @@ module.exports = {
     {
       type: "category",
       label: "6. 集群接口文档",
-      items: ['6_1_introduce'],
+      items: ['6_1_introduce','6_2_introduce'],
     },
     {
       type: "category",
