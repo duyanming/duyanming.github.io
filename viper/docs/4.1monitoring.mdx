@@ -62,7 +62,10 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 <div style={{width:"100%",textAlign:"center"}}>
     <img src={useBaseUrl("img/getway_runing.jpg")} />
 </div>
-:::tip 发布或者从bin-debug 启动 发现没弹出启动信息不要紧张 需要在Getway（网关）的Program中ConfigureLogging的LogLevel.None 改为LogLevel.Information即可:::
+
+:::tip 发布或者从bin-debug 启动 发现没弹出启动信息不要紧张 
+  需要在Getway（网关）的Program中ConfigureLogging的LogLevel.None 改为LogLevel.Information即可
+:::
 
 &nbsp;&nbsp;目前支持两种`Autofac`、`DependencyInjection`,推荐`Autofac`
 

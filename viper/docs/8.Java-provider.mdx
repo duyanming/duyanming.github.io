@@ -5,22 +5,22 @@ sidebar_label: 8.1 集成Java
 ---
 
 
-#8.1 集成JavaProvider
-####8.1.1、Anno是什么？
+# 8.1 集成JavaProvider
+#### 8.1.1、Anno是什么？
 Anno是一个微服务框架引擎。入门简单、安全、稳定、高可用、全平台可监控、依赖第三方框架少。底层通讯RPC(Remote Procedure Call)采用稳定可靠经过无数成功项目验证过的跨语言的thrift、 grpc。 自带服务注册发现健康检查（不依赖于Etcd、Consul、Zookeeper）、调用链追踪、Cron 调度、限流、事件总线等等。
 
- ####8.1.2、Java和.Net 混合开发　
+ #### 8.1.2、Java和.Net 混合开发　
 
 　　Java的生态很强大，但是他的语法也常常让人诟病。提起.Net经常有人说他不能跨平台（其实早期.net 可以借助Mono跨平台,并且在多个领域取得了不可磨灭的成绩），国内生态不好。随着.net core 的出现和前段时间.Net5的发布，让.net 跨平台更容易。并且.net 有着超高的性能、优雅的语法等等很多方面被人称赞。在编程语言百花齐放的今天，我们需要扬长避短利用不同编程语言各自的优势为我们提供更好的服务。就在这种场景下我们推出了 Anno微服务框架，让微服务、跨语言混合开发变的更简单更容易。　
 　　在Anno中调用方（Client）无需知道服务提供方（Provider）的地址、端口、开发语言等等信息，因此我们在开发过程中对于我们需要的服务我们只管通过Client SDK调用，无需关注细节。这样我们也避免了在多语言开发的微服务中带来的各种奇葩问题。
-  ####8.1.3、Java集成细节展示
+  #### 8.1.3、Java集成细节展示
   ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/c6b32a2072bee78119d3ac6fea4c7ba3)
-  #####Java服务的资源监控
+  ##### Java服务的资源监控
   ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/bbbb7f641181b4c031006f317e741566)
-  #####从网关（.NET5.0实现）访问Java服务
+  ##### 从网关（.NET5.0实现）访问Java服务
   ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/8cd969b08254c15e3a0da60164561d99)
   ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/d713a49c708c4d6d3f947f8235bd5725)
-  ####8.1.4 java端功能开发实例代码
+  #### 8.1.4 java端功能开发实例代码
   ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/5ac47e89afac13037474dbf1e45b9bc9)
   ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/98703aabe4427a3a62e4134fb40757ad)
   ```csharp
