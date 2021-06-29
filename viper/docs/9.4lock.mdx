@@ -4,8 +4,6 @@ title: 9.4 分布式锁
 sidebar_label: 9.4 分布式锁
 ---
 
-
-#### 9.4 分布式锁
 ##### 9.4.1、什么是锁
 <strong>锁</strong>是为了解决多线程或者多进程资源竞争的问题。
 
@@ -28,7 +26,7 @@ sidebar_label: 9.4 分布式锁
  多进程之间解决资源竞争问题我们则需要引入分布式锁。通过一个协调者来解决，通常的解决办法是通过redis来解决，这里不展开redis分布式锁的讨论。　接下来我们来聊聊如何自己实现一个分布式锁（不依赖于redis）。
  #### 9.4.2、分布式锁是个什么？
  分布式锁是分布式、微服务中一个必然要讨论的话题。他为的是解决多进程多线程资源竞争的问题。
- ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/e480dd71eada56958ccf04719434643e)
+  ![avatar](../static/img/dlock01.png)
  
 下面我们以订单系统下单扣减库存为例聊一聊扣减库存的问题。
     三个客户KA、KB、KC同时下单购买物品P1，请求通过负载均衡器分发到订单服务A、订单服务B、订单服务C。这个时候三个服务同时要对数据库中的P1物品判断库存是否充足。假设库存剩余10个，KA需要购买6个、KB需要购买6个、KC需要购买6个。
@@ -95,6 +93,7 @@ namespace ConsoleTest
             {
                 Console.WriteLine(e.Message);
             }
+            
         }
         void Init()
         {
@@ -110,7 +109,7 @@ namespace ConsoleTest
     }
 }
  ```
- ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/9925b4d24c46255d8bf7eed6756d61c9)
+  ![avatar](../static/img/dlock02.png)
  
  不同类型的锁可以同时进入相互不影响
  ```csharp
@@ -122,7 +121,7 @@ namespace ConsoleTest
                 var taskJJ = Task.Factory.StartNew(() => { DLTest1("Key001"); });
                 ts.Add(taskJJ);
  ```
- ![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/7cdaa35769a5dd229082efc6429714ae)
+  ![avatar](../static/img/dlock03.png)
  
  上图我们开了12个进程同时进入DLTest1 方法，
  
@@ -151,7 +150,6 @@ namespace ConsoleTest
  
  
 :::tip 分布式锁的测试链接
-https://github.com/duyanming/Anno.Core/blob/master/test/ConsoleTest/DLockTest.cs 
 
 freeredis 实现的分布式锁:https://www.cnblogs.com/hellotim/p/14513000.html
 :::
