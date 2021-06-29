@@ -156,6 +156,7 @@ namespace ViperService
 &nbsp;&nbsp;`IocLoader.GetAutoFacContainerBuilder()` 为Autofac方式
 
 &nbsp;&nbsp;`IocLoader.GetServiceDescriptors()` 为DependencyInjection方式 <sub>**.netcore 自带的依赖注入中间件**</sub>
+<sub>需要注意的是使用IocLoader.GetServiceDescriptors 需要在Bootstrap.StartUp方法中使用第二个参数指定IocType.DependencyInjection</sub>
 :::
 ### 5. 接口文档写入 注册中心`ViperCenter`
 
