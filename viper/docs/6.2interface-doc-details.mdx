@@ -31,18 +31,18 @@ router：需要请求的Module名称（不带最后的Module）
 method：方法名
 UserName：自定义的参数信息
 可以看到PRC会链接到7010进行插件的数据获取，在不通过网关的情况下也可以进行接口测试，作者给出三种测试方式：
-1 Api调用方式：
+#### 1 Api调用方式：
 https://gitee.com/duyanming/Anno.Samples/tree/master/SamplesWebApi
-2 添加测试程序
+#### 2 添加测试程序
 https://gitee.com/dotnetchina/anno.core/tree/develop/samples/Thrift/Cocas
-3 控制台直接调用方式
+#### 3 控制台直接调用方式
 https://gitee.com/duyanming/Anno.Samples/blob/master/SamplesConsoleClient/ConsoleClient/Program.cs
 
 ## 6.2.2 Vue 进行接口请求的一些问题
 首先前端的请求可能来自任何终端，当请求终端来自Vue时，我们可能想要自定义一些返回字段而不是Anno定义好的数据。那么我们该如何定义呢？
 我们在运行Viper.Getway需要知道我们的请求是如何被转发到各个服务的。
 通过观察我们发现所有的请求会通过一个中间件扩展进行访问，如图：
-![](https://www.showdoc.com.cn/server/api/attachment/visitfile/sign/3f45397c58357343003f1c83324e888e)
+![](../static/img/doc01.png)
 我们可以看到请求通过Map进行了一个映射，当然我们可以进行自定义映射如
 ```endpoints.Map("SysMg/WCApi", WCApi); ```
 我们只需要在方法的最后进行自定义参数的转换即可实现返回值的自定义。

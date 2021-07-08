@@ -9,7 +9,7 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[Welcome]]></title>
-            <link>https://github.com/duyanming/Anno.Core/blog/welcome</link>
+            <link>https://github.com/duyanming/Anno.Core/anno/blog/welcome</link>
             <guid>welcome</guid>
             <pubDate>Tue, 29 Sep 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[Hi there 👋]]></description>
