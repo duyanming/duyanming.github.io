@@ -28,6 +28,10 @@ module.exports = {
           to: 'blog',
           label: '博客',
           position: 'left'
+        },{
+          href: 'https://qm.qq.com/cgi-bin/qm/qr?k=6dg5yMmXtu49mPgJeLjw6ZeCozurwRsU&jump_from=webapi',
+          label: 'QQ群:478399354',
+          position: 'right'
         },
         {
           href: 'http://140.143.207.244/',

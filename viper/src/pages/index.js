@@ -68,6 +68,7 @@ function Home() {
         <div className="container">
           <h2 className="hero__title">{siteConfig.title}</h2>
           <p className="hero__subtitle"><h3>{siteConfig.tagline}</h3></p>
+          <p><h4>QQ交流群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=6dg5yMmXtu49mPgJeLjw6ZeCozurwRsU&jump_from=webapi">478399354</a></h4></p>
           <div className={styles.buttons}>
             <Link
               className={clsx(
