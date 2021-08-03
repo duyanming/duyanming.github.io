@@ -1,389 +1,248 @@
-# Viper
-    Viper 是一个基于Anno开发的例子
+# 🏡Anno 分布式微服务开发框架
 
-##  [Java 实现 ](https://github.com/duyanming/anno.thrift-parent) : https://github.com/duyanming/anno.thrift-parent
+**Anno 是一个分布式开发框架,专注于服务治理、监控、链路追踪。RPC可选用高性能跨语言的Thrift（推荐）、Grpc。同时支持 .net core 、.net framework、java。**
+[![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.svg)](https://www.nuget.org/packages/Anno.EngineData)
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/duyanming/Anno.Core/master/LICENSE)
 
-##  [Demo 在线演示地址](http://140.143.207.244) :http://140.143.207.244
-    账号：anno
-    密码：123456
-# Anno 分布式开发框架
-
-    Anno 是一个分布式开发框架，同时支持 .net core3.1 、.net frameworker4.6.1
-
-## 1、运行Viper
-
-### MySQL 数据库
-
-```xml
-运行数据库脚本创建数据库
-
-	1、Viper\database\Viper20200926184831.sql
-
-	2、修改viperService 数据库连接字符串
-		Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config
-```
-
-```xml
-<appSettings>
-    <!-- 数据库连接字符串 Mysql-->
-    <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
-</appSettings>
-```
+![Dashboard](https://z3.ax1x.com/2021/06/29/Rade3R.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RadaKP.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RawXSs.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/Ra0FfJ.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RadBVS.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RadWrV.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RadXqK.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RawPxI.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RaweIg.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RawhQI.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/Ra0tnP.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/Ra0ocR.png)
+![Dashboard](https://z3.ax1x.com/2021/06/29/RaBkE8.png)
 
 
-```
-第一步：启动注册中心
-	Viper\ViperCenter\bin\Debug\netcoreapp3.1\Anno.config
-```
+[在线演示](http://49.232.112.70) :http://49.232.112.70
 
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <!--ViperCenter 端口-->
-  <Port>7010</Port>
-    <!--ViperCenter 超时时间-->
-  <TimeOut>120000</TimeOut>
-  <Servers>
-       <!--dc 注册到注册中心的 服务节点 （下面的内容是ViperService 启动后自动写入的内容）-->
-    <dc name="Anno.Plugs.LogicService,Anno.Plugs.TraceService,Anno.Plugs.ViperService" nickname="ViperService-01" ip="100.100.100.9" port="7011" timeout="20000" weight="1" />
-  </Servers>
-</configuration>
-```
+[示例项目](https://github.com/duyanming/Viper) :https://github.com/duyanming/Viper
+
+## 🎄Nuget 基础
+
+Package name                             |Description   | Version                     | Downloads
+-----------------------------------------|--------------|-----------------------------|-------------------------
+`Anno.Const`|配置库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Const.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Const/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Const.svg)
+`Anno.Log`|日志库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Log.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Log/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Log.svg)
+`Anno.Loader`|依赖注入库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Loader.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Loader/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Loader.svg)
+`Anno.CronNET`|任务调度库 | [![NuGet](https://img.shields.io/nuget/v/Anno.CronNET.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.CronNET/) | ![downloads](https://img.shields.io/nuget/dt/Anno.CronNET.svg)
+`Anno.EngineData`|业务处理基础库 | [![NuGet](https://img.shields.io/nuget/v/Anno.EngineData.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.EngineData/) | ![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.svg)
+
+## 🎃Nuget 通信
+
+Package name                       |Description       | Version                     | Downloads
+-----------------------------------|------------------|-----------------------------|---------------------
+`Anno.Rpc.Center`|Thrift注册中心库  | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.Center.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.Center/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.Center.svg)
+`Anno.Rpc.Client` |Thrift客户端库| [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.Client.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.Client/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.Client.svg)
+`Anno.Rpc.Server`|Thrift Server服务库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.Server.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.Server/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.Server.svg)
+`Anno.Rpc.CenterGrpc`|Grpc注册中心库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.CenterGrpc.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.CenterGrpc/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.CenterGrpc.svg)
+`Anno.Rpc.ClientGrpc`|Grpc客户端库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.ClientGrpc.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.ClientGrpc/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.ClientGrpc.svg)
+`Anno.Rpc.ServerGrpc`|GrpcServer服务库 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.ServerGrpc.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.ServerGrpc/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.ServerGrpc.svg)
+
+## 🎁Nuget 扩展
+
+Package name                           |Description     | Version                     | Downloads
+---------------------------------------|----------------|-----------------------------|------------------------
+`Anno.EventBus`|EventBus事件总线库 | [![NuGet](https://img.shields.io/nuget/v/Anno.EventBus.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.EventBus/) | ![downloads](https://img.shields.io/nuget/dt/Anno.EventBus.svg)
+`Anno.RateLimit`|令牌桶、漏桶限流库 | [![NuGet](https://img.shields.io/nuget/v/Anno.RateLimit.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.RateLimit/) | ![downloads](https://img.shields.io/nuget/dt/Anno.RateLimit.svg)
+`Anno.EngineData.RateLimit` |Anno服务限流中间件| [![NuGet](https://img.shields.io/nuget/v/Anno.EngineData.RateLimit.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.EngineData.RateLimit/) | ![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.RateLimit.svg)
+`Anno.LRUCache`|缓存库 | [![NuGet](https://img.shields.io/nuget/v/Anno.LRUCache.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.LRUCache/) | ![downloads](https://img.shields.io/nuget/dt/Anno.LRUCache.svg)
+`Anno.EngineData.Cache`|Anno服务缓存中间件 | [![NuGet](https://img.shields.io/nuget/v/Anno.EngineData.Cache.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.EngineData.Cache/) | ![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.Cache.svg)
+`Anno.Plugs.MonitorService`|Anno服务监控中间件 | [![NuGet](https://img.shields.io/nuget/v/Anno.Plugs.MonitorService.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Plugs.MonitorService/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Plugs.MonitorService.svg)
+`Anno.Rpc.Client.DynamicProxy`|接口代理Anno客户端扩展 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.Client.DynamicProxy.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.Client.DynamicProxy/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.Client.DynamicProxy.svg)
+
+## 🎂整体架构
+![整体架构](https://s3.ax1x.com/2020/12/18/rtegcd.png)
+
+整体架构主要分为三个部分
+
+　　1、注册中心：AnnoCenter 
+
+　　2、微服务：AnnoService（可以是多个服务例如：订单服务A、库存服务B、支付服务C、用户服务D）
+
+　　3、ApiGateway：[参考Viper](https://github.com/duyanming/Viper)
+　　
+# 📢主要功能
+
+　　服务注册中心、服务发现、健康检查、负载均衡、限流、失败重试、链路追踪、资源监控等功能
 
 
+# 📦注册中心(AnnoCenter)
 
-    进入项目文件夹 Viper\ViperCenter\bin\Debug\netcoreapp3.1 
-    运行命令 dotnet ViperCenter.dll
-    看到下图 说明运行成功
-![第一步](https://s1.ax1x.com/2020/09/26/0iRxsI.png)
+　　AnnoCenter 是一个服务注册中心，主要职责是 发现服务（例如订单服务A、库存服务B）、存储服务配置信息、健康检查、简单键值KV存储。客户端定时从注册中心获取服务信息缓存到本地。即便注册中心宕机也不影响整个集群运行，因为客户端已经缓存了整个集群的服务信息。但是新加入的服务无法注册进来，需要启动注册中心才可以。
+　　客户端(例如：ApiGateway )发送过来请求时,客户端类库从本地缓存找出能够处理此请求的服务列表（这个过程可能涉及权重等策略）选择一个去处理请求，然后返回，如果失败会有重试机制。
+　　注册中心会定时对每个服务做健康检查，如果连接不上服务则标记此服务为亚健康状态，此时不会将此服务踢出也不会将自服务返回给客户单使用，然后开始重复做检查。如果一分钟内恢复正常则重新标记为健康状态切可以对外提供服务，否则永久踢出服务。
+    
 
-```
-第二步：启动 ViperService
-	Viper\ViperService\bin\Debug\netcoreapp3.1\Anno.config
-```
+    服务注册中心（AnnoCenter） 是整个集群第一个需要运行起来的程序。
 
-``` xml
-<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-  <!--0,0 第一位是 工作站，第二位数据中心
-  （所有的 AnnoService 的 两位数不能重复例如不能存在【1,2】【1,2】）
-  可以存在【1,2】【2,1】
-  -->
-  <IdWorker>0,0</IdWorker>
-  <!--App名称-->
-  <AppName>ViperService-01</AppName>
-  <!--监听端口-->
-  <Port>7011</Port>
-  <!--权重-->
-  <Weight>1</Weight>
-  <!--功能 非Anno.Plugs  加入方式-->
-  <FuncName></FuncName>
-  <!--忽略的功能 Trace,Logic-->
-  <IgnoreFuncName></IgnoreFuncName>
-  <!--超时时间毫秒-->
-  <TimeOut>20000</TimeOut>
-  <!--注册到的目标-->
-  <Ts Ip="127.0.0.1" Port="7010"/>
-  <IocDll>
-    <!-- IOC 仓储--><!--
-    <Assembly>Anno.Repository</Assembly>
-    --><!-- 领域--><!--
-    <Assembly>Anno.Domain</Assembly>
-    --><!-- 查询服务--><!--
-    <Assembly>Anno.QueryServices</Assembly>
-    --><!--事件Handler--><!--
-    <Assembly>Anno.Command.Handler</Assembly>-->
-  </IocDll>
-  <appSettings>
-    <!-- 数据库连接字符串 Mysql-->
-    <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
-    <!--
-    redisConn Redis 连接字符串 127.0.0.1:6379,abortConnect=false,allowAdmin =true,keepAlive=180
-    redisPrefix Key 前缀 Anno:
-    redisExpiryDate Key 有效期  单位（分钟） 20
-    redisSwitch 是否开启数据库 false 不开启 false
-    -->
-    <add key="redisConn" value=""/>
-    <add key="redisPrefix" value="SW:"/>
-    <add key="redisExpiryDate" value="20"/>
-    <add key="redisSwitch" value="false"/>
-  </appSettings>
-</configuration>
-
-```
-
-一般情况下只用修改
+配置文件：只需要配置端口、超时时间即可。服务节点信息会在服务注册进来的时候自动写入
 
 ```xml
- <!--注册到的目标-->
-  <Ts Ip="127.0.0.1" Port="7010"/>
 
- <!-- 数据库连接字符串 Mysql-->
-    <add key="ConnStr" value="server=127.0.0.1;database=viper;uid=bif;pwd=123456;SslMode=None;"/>
+    <?xml version="1.0" encoding="utf-8"?>
+    <configuration>
+      <!--#lbs 配置 Port 注册中心监听端口 TimeOut 超时时间毫秒
+      dc：节点
+      dc:nickname：服务名称 App001
+      dc:name: 功能tag
+      dc:ip:服务IP
+      dc:port:服务端口
+      dc:timeout:服务超时时间
+      dc:weight:服务权重 数字
+      -->
+      <Port>6660</Port>
+      <TimeOut>120000</TimeOut>
+      <Servers>
+        <dc name="Anno.Plugs.TraceService,Anno.Plugs.DLockService,Anno.Plugs.EsLogService" nickname="App001" ip="10.112.93.122" port="6659" timeout="20000" weight="1" />
+      </Servers>
+    </configuration>
+
 ```
 
+# 👑服务(AnnoService)
+服务宿主程序，本着约定大于配置的开发原则。
+插件式开发具体参考：
+Packages
 
+    命名空间和程序集名称相同，格式为Anno.Plugs.XXXService 例如：Anno.Plugs.HelloWorldService
 
-    ViperService 可以和 ViperCenter 不在同一台电脑，也可以运行多个server 也可以负载均衡，高级用法随后介绍
-    进入项目文件夹 Viper\ViperService\bin\Debug\netcoreapp3.1 
-    运行命令 dotnet ViperService.dll
-    看到下图 说明 ViperService 成功运行 并且已经注册到 注册中心（ViperCenter）运行成功
-![第二步](https://s1.ax1x.com/2020/09/26/0iWuwV.png)
+    初始化配置    
+    实现接口：IPlugsConfigurationBootstrap
 
-启动 Viper.GetWay
+```cs
+using Anno.EngineData;
+using System;
 
-    第三步：调用链追踪
-    	Viper\Viper\appsettings.json
-
-```json
-
+namespace Anno.Plugs.HelloWorldService
 {
-  "Target": {
-    "AppName": "ApiGateway",
-    "IpAddress": "127.0.0.1",
-    "Port": 7010,
-    "TraceOnOff": true
-  },
-  "Limit": {
-    "Enable": true,
-    "TagLimits": [
-      {
-        "channel": "*",
-        "router": "*",
-        "timeSpan": "1",
-        "rps": 100,
-        "limitSize": 100
-      }
-    ],
-    "IpLimit": {
-      "timeSpan": 1,
-      "rps": 100,
-      "limitSize": 100
-    },
-    "White": [
-      "0.0.0.1",
-      "192.168.1.2",
-      "192.168.2.18"
-    ],
-    "Black": [
-      "0.0.0.2",
-      "192.168.3.18"
-    ]
-  }
+    /// <summary>
+    /// 插件启动引导器
+    /// DependsOn 依赖的类型程序集自动注入DI容器
+    /// </summary>
+    [DependsOn(
+        //typeof(Domain.Bootstrap)
+        //, typeof(QueryServices.Bootstrap)
+        //, typeof(Repository.Bootstrap)
+        //, typeof(Command.Handler.Bootstrap
+        )]
+    public class HelloWorldBootStrap : IPlugsConfigurationBootstrap
+    {
+        /// <summary>
+        /// Service 依赖注入构建之后调用
+        /// </summary>
+        public void ConfigurationBootstrap()
+        {
+            //throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Service 依赖注入构建之前调用
+        /// </summary>
+        /// </summary>
+        public void PreConfigurationBootstrap()
+        {
+            //throw new NotImplementedException();
+        }
+    }
 }
 
 ```
 
+功能模块实现
+继承: BaseModule
 
+Module命名规范为 XXXModule，以Module结尾 例如：HelloWorldViperModule
+```cs
+/****************************************************** 
+Writer:Du YanMing
+Mail:dym880@163.com
+Create Date:2020/10/30 13:15:24 
+Functional description： HelloWorldViperModule
+******************************************************/
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-![第三步](https://s1.ax1x.com/2020/07/30/anlo26.png)
+namespace Anno.Plugs.HelloWorldService
+{
+    using Anno.Const.Attribute;
+    using Anno.EngineData;
+    using HelloWorldDto;
+    using System.ComponentModel.DataAnnotations;
+
+    public class HelloWorldViperModule : BaseModule
+    {
+        [AnnoInfo(Desc = "世界你好啊SayHi")]
+        public dynamic SayHello([AnnoInfo(Desc = "称呼")] string name, [AnnoInfo(Desc = "年龄")] int age)
+        {
+            Dictionary<string, string> input = new Dictionary<string, string>();
+            input.Add("vname", name);
+            input.Add("vage", age.ToString());
+            var soEasyMsg = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<string>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "SayHi", input)).OutputData;
+            return new { HelloWorldViperMsg = $"{name}你好啊，今年{age}岁了", SoEasyMsg = soEasyMsg };
+        }
+    
+        [AnnoInfo(Desc = "两个整数相减等于几？我来帮你算（x-y=?）")]
+        public int Subtraction([AnnoInfo(Desc = "整数X")] int x, [AnnoInfo(Desc = "整数Y")] int y)
+        {
+            return x - y;
+        }
+        [AnnoInfo(Desc = "买个商品吧，双十一马上就来了")]
+        public ProductDto BuyProduct([AnnoInfo(Desc = "商品名称")] string productName, [AnnoInfo(Desc = "商品数量")] int number)
+        {
+            double price = new Random().Next(2, 90);
+            Dictionary<string, string> input = new Dictionary<string, string>();
+            input.Add("productName", productName);
+            input.Add("number", number.ToString());
+            var product = Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<ProductDto>>(this.InvokeProcessor("Anno.Plugs.SoEasy", "AnnoSoEasy", "BuyProduct", input)).OutputData;
+            product.CountryOfOrigin = $"中国北京中转--{ product.CountryOfOrigin}";
+            return product;
+        }       
+    }
+}
 
 ```
-调用链详情
-```
 
-![第三步](https://s1.ax1x.com/2020/07/30/anlI8x.png)
+配置文件：
+  ```xml
 
- 第四步：集群路由信息
-
-![第三步](https://s1.ax1x.com/2020/07/30/anGPsK.png)
-
-   ![第三步](https://s1.ax1x.com/2020/07/30/anGNzq.png)
-
-```
-调试邮件接口成功
-```
-
-![第三步](https://s1.ax1x.com/2020/07/30/anJipn.png)
-
-
-
-第五步：服务性能监控
+    <?xml version="1.0" encoding="utf-8" ?>
+    <configuration>
+      <!--0,0 第一位是 工作站，第二位数据中心
+      （所有的 AnnoService 的 两位数不能重复例如不能存在【1,2】【1,2】）
+      可以存在【1,2】【2,1】
+      -->
+      <IdWorker>0,0</IdWorker>
+      <!--App名称-->
+      <AppName>App001</AppName>
+      <!--监听端口-->
+      <Port>6659</Port>
+      <!--权重-->
+      <Weight>1</Weight>
+      <!--功能--> 
+      <FuncName>Anno.Plugs.LogicService,Anno.Plugs.TraceService</FuncName>
+      <!--忽略的功能 Trace,Logic-->
+      <IgnoreFuncName></IgnoreFuncName>
+      <!--超时时间毫秒-->
+      <TimeOut>20000</TimeOut>
+      <!--注册到的目标-->
+      <Ts Ip="10.112.93.122" Port="6660"/>
+      <IocDll>
+        <!-- IOC 仓储、领域-->
+        <Assembly>Anno.Repository</Assembly>
+      </IocDll>
+      <appSettings>
        
-![第四步](https://s1.ax1x.com/2020/09/26/0iRcIU.png)
+       </appSettings>
+    </configuration>
 
+  ```
 
+# 🏄网关
 
-# Anno EventBus
-    Eventbus Support  InMemory and Rabbitmq
-## 1、Server配置
-
-```c#
-	//指定EventHandler的 所在程序集
-	var funcs = Anno.Const.Assemblys.Dic.Values.ToList();
-                #region RabbitMQEventBus
-                //消费失败通知
-
-                RabbitMQEventBus.Instance.ErrorNotice += (string exchange, string routingKey, Exception exception, string body) =>
-                        {
-                            Log.Fatal(new { exchange, routingKey, exception, body }, typeof(RabbitMQEventBus));
-                        };
-                EventBusSetting.Default.RabbitConfiguration = new RabbitConfiguration()
-                {
-                    HostName = "192.168.100.173",
-                    VirtualHost = "dev",
-                    UserName = "dev",
-                    Password = "dev",
-                    Port = 5672
-                };
-                RabbitMQEventBus.Instance.SubscribeAll(funcs);
-
-                #endregion
-                #region InMemory EventBus
-                EventBus.Instance.ErrorNotice += (string exchange, string routingKey, Exception exception, string body) =>
-                {
-                    Log.Fatal(new { exchange, routingKey, exception, body }, typeof(EventBus));
-                };
-                EventBus.Instance.SubscribeAll(funcs);
-
-```
-
-## 2、EventData配置
-
-```c#
-
-	using Anno.EventBus;
-	
-	namespace Events
-	{
-	    public class FirstMessageEvent:EventData
-	    {
-	        public string Message { get; set; }
-	    }
-	}
-
-```
-
-
-## 3、EventHandler配置
-
-```c#
-	
-	namespace Anno.Plugs.SamsundotService.EventHandler
-	{
-	    using Anno.EventBus;
-	    using Events;
-	
-	    class FirstMessageEventHandler : IEventHandler<FirstMessageEvent>
-	    {
-	        public void Handler(FirstMessageEvent entity)
-	        {
-	            Log.Log.Info(new { Plugs= "Samsundot",Entity=entity },typeof(FirstMessageEventHandler));
-	        }
-	    }
-	}
-
-```
-
- ```c#
-	
-	namespace Anno.Plugs.YYTestService.EventHandler
-	{
-	    using Anno.EventBus;
-	    using Events;
-	
-	    class FirstMessageEventHandler : IEventHandler<FirstMessageEvent>
-	    {
-	        public void Handler(FirstMessageEvent entity)
-	        {
-	            Log.Log.Info(new { Plugs = "YYTest", Entity = entity },               typeof(FirstMessageEventHandler));
-	        }
-	    }
-	    /// <summary>
-	    /// 异常消费演示，测试 消费失败通知
-	    /// </summary>
-	    class FirstMessageExceptionEventHandler : IEventHandler<FirstMessageEvent>
-	    {
-	        public void Handler(FirstMessageEvent entity)
-	        {
-	            Log.Log.Info(new { Plugs = "YYTest",Handle= "FirstMessageExceptionEventHandler", Entity = entity }, typeof(FirstMessageEventHandler));
-	            throw new Exception("异常消费演示，测试 消费失败通知 From FirstMessageExceptionEventHandler!");
-	        }
-	    }
-	}
-
- ```
-
-## 4、中间件
-### 4.1 缓存中间件
-#### Install-Package Anno.EngineData.Cache
-
-```shell
-
-Install-Package Anno.EngineData.Cache
-
-```
-
- ```c#
-	
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Anno.EngineData;
-using Anno.EngineData.Cache;
-
-
-namespace Anno.Plugs.CacheRateLimitService
-{
-    public class CacheModule : BaseModule
-    {
-        /*
-        参数1：缓存长度
-        参数2：缓存存活时间
-        参数3：缓存存活时间是否滑动
-        */
-        [CacheLRU(5,6,true)]
-        public ActionResult Cache(string msg)
-        {
-            Console.WriteLine(msg);
-            return new ActionResult(true, null,null,msg);
-        }
-    }
-}
-
- ```
-
- ### 4.2 限流中间件
-#### Install-Package Anno.EngineData.RateLimit
-
-```shell
-
-Install-Package Anno.EngineData.RateLimit
-
-```
-
- ```c#
-	
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Anno.EngineData;
-using Anno.RateLimit;
-
-namespace Anno.Plugs.CacheRateLimitService
-{
-    public class LimitModule : BaseModule
-    {
-        /*
-        参数1：限流算法是令牌桶还是漏桶
-        参数2：限流时间片段单位秒
-        参数3：单位时间可以通过的请求个数
-        参数4：桶容量
-        */
-        [EngineData.Limit.RateLimit(LimitingType.TokenBucket,1,5,5)]
-        public ActionResult Limit(string msg)
-        {
-            Console.WriteLine(msg);
-            return new ActionResult(true, null, null, msg);
-        }
-    }
-}
-
- ```
-
-
-
-
-#dotnet
-dotnet publish "E:\gitProject\Anno\DCS\AppCenter\AppCenter.csproj" -c Release -r linux-x64 -o "E:\gitProject\Anno\DCS\AppCenter\bin"
-
+[参考Viper](https://github.com/duyanming/Viper)
