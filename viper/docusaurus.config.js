@@ -2,7 +2,7 @@ module.exports = {
   title: 'Anno',
   tagline: 'Anno 是一个可监控、可追踪、简单易用、高性能的微服务引擎框架',
   url: 'https://github.com/duyanming/Anno.Core',
-  baseUrl: '/',
+  baseUrl: '/anno/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'duyanming', // Usually your GitHub org/user name.
@@ -34,7 +34,7 @@ module.exports = {
           position: 'right'
         },
         {
-          href: 'http://140.143.207.244/',
+          href: 'http://49.232.112.70/',
           label: '在线体验',
           position: 'right'
         },
@@ -76,7 +76,7 @@ module.exports = {
             },
             {
               label: '体验',
-              to: 'http://140.143.207.244/',
+              to: 'http://49.232.112.70/',
             },
           ],
         },
