@@ -97,6 +97,20 @@ function Home() {
             </div>
           </section>
         )}
+        <div className={styles.footer}>
+        <img  src="https://z3.ax1x.com/2021/06/29/Rade3R.png" alt="home" />
+        </div>
+        <div className={styles.footer}>
+          <img  src="https://z3.ax1x.com/2021/06/29/RadaKP.png" alt="home" />
+        </div>
+
+        <div className={styles.footer}>
+          <img  src="https://z3.ax1x.com/2021/06/29/Ra0tnP.png" alt="home" />
+        </div>
+
+        <div className={styles.footer}>
+          <img  src="https://z3.ax1x.com/2021/06/29/Ra0ocR.png" alt="home" />
+        </div>
       </main>
     </Layout>
   );

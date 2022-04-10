@@ -11,16 +11,18 @@ slug: /
 [![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.svg)](https://www.nuget.org/packages/Anno.EngineData)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/duyanming/Anno.Core/master/LICENSE)
 
-## Anno 三大特色
+## Anno 特色
 - <strong>资源监控</strong>
 - <strong>链路追踪</strong>
 - <strong>集群接口文档</strong>
+- <strong>服务在线安装部署</strong>
+- <strong>守护进程，扩容缩容</strong>
 
 ![Dashboard](../static/img/dashboard.jpg)
 
-[在线演示](http://49.232.112.70) :http://49.232.112.70
+在线演示 :http://49.232.112.70
 
-[示例项目](https://github.com/duyanming/Viper) :https://github.com/duyanming/Viper
+示例项目&Dashboard :https://github.com/duyanming/Viper
 
 ## 基础组件包
 
@@ -54,7 +56,7 @@ Package name                           |Description     | Version               
 `Anno.EngineData.Cache`|Anno服务缓存中间件 | [![NuGet](https://img.shields.io/nuget/v/Anno.EngineData.Cache.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.EngineData.Cache/) | ![downloads](https://img.shields.io/nuget/dt/Anno.EngineData.Cache.svg)
 `Anno.Plugs.MonitorService`|Anno服务监控中间件 | [![NuGet](https://img.shields.io/nuget/v/Anno.Plugs.MonitorService.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Plugs.MonitorService/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Plugs.MonitorService.svg)
 `Anno.Rpc.Client.DynamicProxy`|接口代理Anno客户端扩展 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.Client.DynamicProxy.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.Client.DynamicProxy/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.Client.DynamicProxy.svg)
-`Anno.Rpc.ExtClient`|接口代理Anno客户端扩展 | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.ExtClient.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.ExtClient/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.ExtClient.svg)
+`Anno.Rpc.Client.DynamicProxyGrpc`|接口代理Anno客户端扩展Grpc | [![NuGet](https://img.shields.io/nuget/v/Anno.Rpc.Client.DynamicProxyGrpc.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Anno.Rpc.Client.DynamicProxyGrpc/) | ![downloads](https://img.shields.io/nuget/dt/Anno.Rpc.Client.DynamicProxyGrpc.svg)
 
 ## 整体架构
 
@@ -246,7 +248,7 @@ namespace Anno.Plugs.HelloWorldService
       <Ts Ip="10.112.93.122" Port="6660"/>
       <IocDll>
         <!-- IOC 仓储、领域 推荐使用 [DependsOn]-->
-        <Assembly>Anno.Repository</Assembly>
+        <!-- <Assembly>Anno.Repository</Assembly>-->
       </IocDll>
       <appSettings>
        

@@ -4,12 +4,12 @@ title: 1.2 Viper 面板简介
 sidebar_label: 1.2 Viper 面板简介
 ---
 
->Viper 是.NET5.0平台下基于Anno开发的Dashboard面板项目
+>Viper 是.NET6.0平台下基于Anno开发的Dashboard面板项目,包括集群看板、服务调用分析、服务接口文档、服务在线安装部署等功能。
+也可以作为Anno入门的模板项目。
 
-##  [在线演示地址](http://49.232.112.70) http://49.232.112.70
+##  Viper http://49.232.112.70
 
-http://49.232.112.70
-    
+    http://49.232.112.70
     账号：anno
     密码：123456
 ![效果图](../static/img/dashboard.jpg)
@@ -24,7 +24,7 @@ https://github.com/duyanming/anno.thrift-parent
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Viper运行顺序为：ViperCenter=>ViperService=>ViperApiGateWay
 :::
 
-### MySQL 数据库
+#### 数据库配置，可以是MySql、SqlServer、等其它数据库，一下采用MySql
 
 
 运行数据库脚本创建数据库
@@ -32,7 +32,7 @@ https://github.com/duyanming/anno.thrift-parent
 - 1、Viper\database\Viper20210201_01.sql
 
 - 2、修改viperService 数据库连接字符串
- >配置文件：`Viper\ViperService\bin\Debug\net5\Anno.config`
+ >配置文件：`Viper\ViperService\bin\Debug\net6.0\Anno.config`
 
 ```xml
 <appSettings>
@@ -45,7 +45,7 @@ https://github.com/duyanming/anno.thrift-parent
 
 ### 第一步：启动注册中心
 
->配置文件：`Viper\ViperCenter\bin\Debug\net5\Anno.config`
+>配置文件：`Viper\ViperCenter\bin\Debug\net6.0\Anno.config`
 
 
 ``` xml
@@ -70,7 +70,7 @@ https://github.com/duyanming/anno.thrift-parent
 
 
 
--    进入项目文件夹 `Viper\ViperCenter\bin\Debug\net5`
+-    进入项目文件夹 `Viper\ViperCenter\bin\Debug\net6.0`
 -    运行命令 `dotnet ViperCenter.dll`
 -    看到下图 说明运行成功
 
@@ -84,7 +84,7 @@ https://github.com/duyanming/anno.thrift-parent
 
 ### 第二步：启动 ViperService
 
->配置文件：`Viper\ViperService\bin\Debug\net5\Anno.config`
+>配置文件：`Viper\ViperService\bin\Debug\net6.0\Anno.config`
 
 
 ``` xml
@@ -143,7 +143,7 @@ https://github.com/duyanming/anno.thrift-parent
 
  `ViperService` 和 `ViperCenter` 可以不在同一台电脑，`ViperService`也可以采用不同端口运行多个`Service` 。`ViperCenter` 可以根据客户端请求自动负载均衡。高级用法随后介绍。
 
-- 进入项目文件夹 `Viper\ViperService\bin\Debug\net5` 
+- 进入项目文件夹 `Viper\ViperService\bin\Debug\net6.0` 
 - 运行命令 `dotnet ViperService.dll`
 - 看到下图 说明 `ViperService` 成功运行 并且已经注册到 注册中心（ViperCenter）运行成功
 
@@ -295,7 +295,7 @@ Eventbus Support  `InMemory` and `Rabbitmq`
 
 ### 2.2 EventData配置
 
-```java
+```csharp
 	using Anno.EventBus;
 	
 	namespace Events

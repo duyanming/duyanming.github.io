@@ -1,62 +1,69 @@
 /* stylelint-disable docusaurus/copyright-header */
 
+
 /**
  * CSS files with the .module.css suffix will be treated as CSS modules
  * and scoped locally.
  */
 
- .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  background-color: #282828;
+.heroBanner {
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-color: #282828;
 }
 
 @media screen and (max-width: 966px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+    .heroBanner {
+        padding: 2rem;
+    }
 }
-h
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+h .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+    width: 100%;
 }
 
 .featureTitle {
-  text-align: center;
+    text-align: center;
 }
 
 .featureImage {
-  height: 200px;
+    height: 200px;
 }
 
 .cus-buttom {
-  color: "#ffd75a" !important;
+    color: "#ffd75a" !important;
 }
 
 .getStarted {
-  color: #ffd75a !important;
+    color: #ffd75a !important;
 }
 
 .getStarted:hover {
-  color: #003f57 !important;
+    color: #003f57 !important;
 }
 
 .subtitle {
-  color: #fff !important;
+    color: #fff !important;
 }
-.imgHome{
-  margin-right: 5px;
-  width: 100%;
-  text-align: center;
+
+.imgHome {
+    margin-right: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
 }

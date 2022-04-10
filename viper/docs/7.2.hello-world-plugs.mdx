@@ -18,9 +18,9 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 添加Anno功能插件依赖
 
 ```shell
-Install-Package Anno.EngineData -Version 1.0.3.3
+dotnet add package Anno.EngineData --version 1.7.0.2
 ```
-增加一个插件启动初始化配置类`HelloWorldBootStrap`
+增加一个插件启动初始化配置类`HelloWorldBootStrap` <b>(可选项)</b>
 
 ```csharp
 using Anno.EngineData;
@@ -171,3 +171,21 @@ namespace Anno.Plugs.SoEasyService
 }
 
 ```
+
+1、在 HelloWorldService 中引入编写的插件
+
+2、修改HelloWorldService 配置文件Anno.Config
+
+> 注册中心地址和端口  `<Ts Ip="127.0.0.1" Port="7010"/>`<br></br>
+服务监听端口 `<Port>7012</Port>`
+
+```xml
+<configuration>
+  <!--监听端口-->
+  <Port>7012</Port>
+  <!--注册到的目标-->
+  <Ts Ip="127.0.0.1" Port="7010"/>
+<configuration>
+```
+
+3、启动HelloWorldService宿主微服务。

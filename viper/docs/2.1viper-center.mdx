@@ -8,11 +8,11 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 ### 2.1.1 一行代码的注册中心
 
- 注册中心概述
+ 注册中心概述，支持服务变动钉钉通知。
 
 <img src={useBaseUrl("img/viper_center.jpg")} />
 
-```java
+```cs
 using Anno.Rpc.Center;
 using System;
 
@@ -27,17 +27,20 @@ namespace ViperCenter
         static void Main(string[] args)
         {
             Console.Title = "ViperCenter";
+            //服务变动钉钉通知
+            DingTalkNotify.CustomConfiguration.InitConst();
             Bootstrap.StartUp(args
                 , (service, noticeType) =>//上线下线
                 {
-
+                    DingTalkNotify.Notice(service,noticeType);
                 }, (newService, oldService) =>//服务配置更改
                 {
-
+                    DingTalkNotify.ChangeNotice(newService, oldService);
                 });
         }
     }
 }
+
 
 ```
 ### 2.1.2 配置文件
