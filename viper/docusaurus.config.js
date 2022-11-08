@@ -34,7 +34,7 @@ module.exports = {
           position: 'right'
         },
         {
-          href: 'http://49.232.112.70/',
+          href: 'http://81.69.19.225:8080/',
           label: '在线体验',
           position: 'right'
         },
@@ -76,7 +76,7 @@ module.exports = {
             },
             {
               label: '体验',
-              to: 'http://49.232.112.70/',
+              to: 'http://81.69.19.225:8080/',
             },
           ],
         },
