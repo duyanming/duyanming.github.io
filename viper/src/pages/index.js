@@ -81,7 +81,7 @@ function Home() {
           </div>
         </div>
         <div className={styles.imgHome}>
-         <img  src="img/home.jpg" alt="home" />
+         <img  src="img/home.png" alt="home" />
         </div>
       </header>
       <main>

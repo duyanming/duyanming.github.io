@@ -34,7 +34,7 @@ module.exports = {
           position: 'right'
         },
         {
-          href: 'http://81.69.19.225:8080/',
+          href: 'http://anno.liqingxi.cn',
           label: '在线体验',
           position: 'right'
         },
@@ -76,7 +76,7 @@ module.exports = {
             },
             {
               label: '体验',
-              to: 'http://81.69.19.225:8080/',
+              to: 'http://anno.liqingxi.cn',
             },
           ],
         },
