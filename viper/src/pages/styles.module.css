@@ -47,6 +47,7 @@ h .buttons {
 
 .getStarted {
     color: #ffd75a !important;
+    margin-left: 10px;
 }
 
 .getStarted:hover {
@@ -66,4 +67,10 @@ h .buttons {
 .footer {
     width: 100%;
     text-align: center;
+}
+.qq{
+    color: #fff;
+}
+.qq:hover{
+    color: #ddf509;
 }
